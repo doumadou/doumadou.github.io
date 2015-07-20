@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>在centos65_x86_64安装体验docker - LearnLog</title>
+        <link rel="shortcut icon" type="image/x-icon" href="/favicon.png">
+        <link rel="stylesheet" href="/theme/css/bootstrap.min.css" type="text/css" />
+        <link rel="stylesheet" href="/theme/font-icons/style.min.css" type="text/css" />
+        <link rel="stylesheet" href="/theme/css/niu2.min.css" type="text/css" />
+        <link rel="canonical" href="/try-docker-in-centos6.5.html" />
+        <script type="text/javascript">window.onload=function(){};</script>
+        <!--[if lt IE 9]>
+            <script src="/theme/js/html5shiv.js"></script>
+            <script src="/theme/js/respond.min.js"></script>
+        <![endif]-->
+    </head>
+    <body> 
+        <div id="body-header">
+            <div class="navbar navbar-inverse navbar-fixed-top">
+                <div class="col-md-12">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        <a class="navbar-brand" href="">
+                            <i class="icon-home"></i>LearnLog
+                        </a>
+                    </div>
+                    <nav class="collapse navbar-collapse bs-navbar-collapse" role="navigation">
+                        <ul class="nav navbar-nav">
+                        <li><a href="/tags.html">
+                                <i class="icon-tag"></i>Tag</a>
+                        </li>
+                        <li><a href="/archives.html">
+                                <i class="icon-archive"></i>Archive
+                            </a>
+                        </li>
+                        <!-- category dropdown list -->
+                        <!--  self defined dropdown list -->
+                        </ul>
+                        
+                        <!-- right nav bar -->
+                        <ul class="nav navbar-nav navbar-right">
+                        <!-- google custom search -->
+                       </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+
+        <div id="body-content">
+            <div class="col-md-8 col-md-offset-2">
+                <h1 id="content-heading">在centos65_x86_64安装体验docker</h1>
+            </div>
+            <div id="niu2-left-container" class="col-md-6 col-md-offset-2 with-right-border">
+                <div id="niu2-main-content">
+                    <html><body><h2 id="kerenl">升级kerenl</h2>
+<div class="codehilite"><pre><span class="c1"># rpm --import https://www.elrepo.org/RPM-GPG-KEY-elrepo.org</span>
+<span class="c1"># rpm -Uvh http://www.elrepo.org/elrepo-release-6-6.el6.elrepo.noarch.rpm</span>
+<span class="c1"># yum --enablerepo=elrepo-kernel -y install kernel-lt</span>
+<span class="err">修改</span><span class="sr">/etc/g</span><span class="n">rub</span><span class="o">.</span><span class="n">conf</span>
+<span class="c1"># reboot</span>
+<span class="p">[</span><span class="n">root</span><span class="nv">@testnode</span> <span class="o">~</span><span class="p">]</span><span class="c1"># uname -r</span>
+<span class="mf">3.10.82</span><span class="o">-</span><span class="mi">1</span><span class="o">.</span><span class="n">el6</span><span class="o">.</span><span class="n">elrepo</span><span class="o">.</span><span class="n">x86_64</span>
+</pre></div>
+<h2 id="docker-docker-version-150-build-a8a31ef150">安装docker( Docker version 1.5.0, build a8a31ef/1.5.0)</h2>
+<h3 id="selinuxlxc">取消selinux，因为它会干扰lxc的正常功能</h3>
+<div class="codehilite"><pre><span class="nv">$</span> <span class="nv">sudo</span> <span class="n">vim</span> <span class="sr">/etc/s</span><span class="n">elinux</span><span class="o">/</span><span class="n">config</span>
+<span class="n">SELINUX</span><span class="o">=</span><span class="n">disabled</span>
+<span class="n">SELINUXTYPE</span><span class="o">=</span><span class="n">targeted</span>
+</pre></div>
+<h3 id="fedora-epel">安装 Fedora EPEL</h3>
+<div class="codehilite"><pre><span class="nv">$</span> <span class="nv">sudo</span> <span class="n">yum</span> <span class="o">-</span><span class="n">y</span> <span class="n">install</span> <span class="n">http:</span><span class="sr">//</span><span class="n">ftp</span><span class="o">.</span><span class="n">riken</span><span class="o">.</span><span class="n">jp</span><span class="sr">/Linux/</span><span class="n">fedora</span><span class="sr">/epel/</span><span class="mi">6</span><span class="sr">/x86_64/</span><span class="n">epel</span><span class="o">-</span><span class="n">release</span><span class="o">-</span><span class="mi">6</span><span class="o">-</span><span class="mi">8</span><span class="o">.</span><span class="n">noarch</span><span class="o">.</span><span class="n">rpm</span>
+</pre></div>
+<h3 id="hop5-repo">添加 hop5 repo地址</h3>
+<div class="codehilite"><pre><span class="nv">$</span> <span class="nv">cd</span> <span class="sr">/etc/</span><span class="n">yum</span><span class="o">.</span><span class="n">repos</span><span class="o">.</span><span class="n">d</span>
+<span class="nv">$</span> <span class="nv">sudo</span> <span class="n">wget</span> <span class="n">http:</span><span class="sr">//</span><span class="n">www</span><span class="o">.</span><span class="n">hop5</span><span class="o">.</span><span class="n">in</span><span class="sr">/yum/</span><span class="n">el6</span><span class="o">/</span><span class="n">hop5</span><span class="o">.</span><span class="n">repo</span>
+</pre></div>
+<h3 id="docker-io">安装 docker-io</h3>
+<div class="codehilite"><pre><span class="c"># sudo yum -y install docker-io</span>
+</pre></div>
+<p>会自动安装带aufs模块的3.10内核，以及docker-io包。</p>
+<div class="codehilite"><pre><span class="c"># yum install -y device-mapper-libs</span>
+<span class="c"># docker images</span>
+</pre></div>
+<h2 id="centos-65">制作镜像 centos 6.5</h2>
+<div class="codehilite"><pre><span class="c1"># yum install -y febootstrap</span>
+
+<span class="n">mount</span> <span class="n">iso</span>
+
+<span class="c1"># mount -o loop /tmp/**.iso /mnt</span>
+
+<span class="c1"># febootstrap centos6.5 centos6.5_image file:///mnt</span>
+<span class="c1">##或者将file:///mnt 改为http://vault.centos.org/6.5/os/x86_64/ 从网络安装</span>
+<span class="err">删除不需要的文件夹</span><span class="p">,</span> <span class="err">减少镜像大小</span>
+<span class="c1"># cd centos6.5_image    </span>
+<span class="c1"># cd lib/modules/ &amp;&amp; rm 2.6.32-431.el6.x86_64/ -rfv</span>
+
+<span class="c1"># cd -</span>
+
+<span class="c1"># cd centos6.5_image &amp;&amp; tar -c .|docker import - centos6.5-base</span>
+
+<span class="p">[</span><span class="n">root</span><span class="nv">@testnode</span> <span class="n">centos6</span><span class="mf">.5_</span><span class="n">image</span><span class="p">]</span><span class="c1"># docker images</span>
+<span class="n">REPOSITORY</span>          <span class="n">TAG</span>                 <span class="n">IMAGE</span> <span class="n">ID</span>            <span class="n">CREATED</span>             <span class="n">VIRTUAL</span> <span class="n">SIZE</span>
+<span class="n">centos6</span><span class="mf">.5</span><span class="o">-</span><span class="n">base</span>      <span class="n">latest</span>              <span class="mi">637778</span><span class="n">da53a4</span>        <span class="mi">19</span> <span class="n">minutes</span> <span class="n">ago</span>      <span class="mf">481.2</span> <span class="n">MB</span>
+</pre></div>
+<h2 id="">启动容器</h2>
+<div class="codehilite"><pre><span class="c">#  docker run -ti centos6.5-base:latest /bin/bash</span>
+</pre></div>
+<h2 id="contianer-pid-ip">获取contianer pid ip</h2>
+<div class="codehilite"><pre><span class="c"># docker inspect -f "{{.State.Pid}}" &lt;container name&gt;</span>
+<span class="c"># docker inspect -f "{{.NetworkSettings.IPAddress}}" &lt;container name&gt;</span>
+</pre></div>
+<h2 id="api">API:</h2>
+<div class="codehilite"><pre><span class="c1"># nc -U /var/run/docker.sock</span>
+<span class="n">GET</span> <span class="sr">/images/</span><span class="n">json</span> <span class="n">HTTP</span><span class="o">/</span><span class="mf">1.1</span> <span class="c1">## 二个回车</span>
+
+<span class="n">HTTP</span><span class="o">/</span><span class="mf">1.1</span> <span class="mi">200</span> <span class="n">OK</span>
+<span class="n">Content</span><span class="o">-</span><span class="n">Type:</span> <span class="n">application</span><span class="o">/</span><span class="n">json</span>
+<span class="n">Date:</span> <span class="n">Sun</span><span class="p">,</span> <span class="mi">12</span> <span class="n">Jul</span> <span class="mi">2015</span> <span class="mi">19</span><span class="p">:</span><span class="mi">35</span><span class="p">:</span><span class="mi">33</span> <span class="n">GMT</span>
+<span class="n">Content</span><span class="o">-</span><span class="n">Length:</span> <span class="mi">1009</span>
+
+<span class="p">[{</span><span class="s">"Created"</span><span class="p">:</span><span class="mi">1436470114</span><span class="p">,</span><span class="s">"Id"</span><span class="p">:</span><span class="s">"d2a0ecffe6fa4ef3de9646a75cc629bbd9da7eead7f767cb810f9808d6b3ecb6"</span><span class="p">,</span><span class="s">"ParentId"</span><span class="p">:</span><span class="s">"29460ac934423a55802fcad24856827050697b4a9f33550bd93c82762fb6db8f"</span><span class="p">,</span><span class="s">"RepoTags"</span><span class="p">:[</span><span class="s">"ubuntu:14.04"</span><span class="p">,</span><span class="s">"ubuntu:14.04.2"</span><span class="p">,</span><span class="s">"ubuntu:latest"</span><span class="p">,</span><span class="s">"ubuntu:trusty-20150630"</span><span class="p">,</span><span class="s">"ubuntu:trusty"</span><span class="p">],</span><span class="s">"Size"</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="s">"VirtualSize"</span><span class="p">:</span><span class="mi">188331689</span><span class="p">}</span>
+<span class="p">,{</span><span class="s">"Created"</span><span class="p">:</span><span class="mi">1436391846</span><span class="p">,</span><span class="s">"Id"</span><span class="p">:</span><span class="s">"019c313e5671f01d0deecbb698636d41c7a06af5f5895802939bc63b367a0bb8"</span><span class="p">,</span><span class="s">"ParentId"</span><span class="p">:</span><span class="s">"5ae2785c4ebfd7fff024e99808012f65b160343f59bfbdd1661791fcfc08ec51"</span><span class="p">,</span><span class="s">"RepoTags"</span><span class="p">:[</span><span class="s">"nginx_1.8.0_php_fpm_5.3.3:v0.1"</span><span class="p">],</span><span class="s">"Size"</span><span class="p">:</span><span class="mi">70797331</span><span class="p">,</span><span class="s">"VirtualSize"</span><span class="p">:</span><span class="mi">552001511</span><span class="p">}</span>
+<span class="p">,{</span><span class="s">"Created"</span><span class="p">:</span><span class="mi">1435787783</span><span class="p">,</span><span class="s">"Id"</span><span class="p">:</span><span class="s">"df74ad94ecc79bdda55062cfbdb0ebcb90bb6c207b4498a3dcc5f92a0b4dd971"</span><span class="p">,</span><span class="s">"ParentId"</span><span class="p">:</span><span class="s">"2f0fa17ce0b8ac98107cc3bc66436103ee6aec323f9a27f8e67634d602918c58"</span><span class="p">,</span><span class="s">"RepoTags"</span><span class="p">:[</span><span class="s">"mysql_server_5.1.73-5:latest"</span><span class="p">],</span><span class="s">"Size"</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="s">"VirtualSize"</span><span class="p">:</span><span class="mi">639244242</span><span class="p">}</span>
+<span class="p">,{</span><span class="s">"Created"</span><span class="p">:</span><span class="mi">1435710271</span><span class="p">,</span><span class="s">"Id"</span><span class="p">:</span><span class="s">"637778da53a417bb6c64b029d59382bfc8fb8381943d89377ad312bb9abbbc75"</span><span class="p">,</span><span class="s">"ParentId"</span><span class="p">:</span><span class="s">""</span><span class="p">,</span><span class="s">"RepoTags"</span><span class="p">:[</span><span class="s">"centos6.5-base:latest"</span><span class="p">],</span><span class="s">"Size"</span><span class="p">:</span><span class="mi">481204071</span><span class="p">,</span><span class="s">"VirtualSize"</span><span class="p">:</span><span class="mi">481204071</span><span class="p">}</span>
+<span class="p">]</span>
+<span class="n">HTTP</span><span class="o">/</span><span class="mf">1.1</span> <span class="mi">400</span> <span class="n">Bad</span> <span class="n">Request</span>
+
+<span class="p">[</span><span class="n">root</span><span class="nv">@testnode</span> <span class="n">go</span><span class="p">]</span><span class="c1"># docker images</span>
+<span class="n">REPOSITORY</span>                  <span class="n">TAG</span>                 <span class="n">IMAGE</span> <span class="n">ID</span>            <span class="n">CREATED</span>             <span class="n">VIRTUAL</span> <span class="n">SIZE</span>
+<span class="n">ubuntu</span>                      <span class="n">trusty</span><span class="o">-</span><span class="mi">20150630</span>     <span class="n">d2a0ecffe6fa</span>        <span class="mi">3</span> <span class="n">days</span> <span class="n">ago</span>          <span class="mf">188.3</span> <span class="n">MB</span>
+<span class="n">ubuntu</span>                      <span class="n">trusty</span>              <span class="n">d2a0ecffe6fa</span>        <span class="mi">3</span> <span class="n">days</span> <span class="n">ago</span>          <span class="mf">188.3</span> <span class="n">MB</span>
+<span class="n">ubuntu</span>                      <span class="mf">14.04</span>               <span class="n">d2a0ecffe6fa</span>        <span class="mi">3</span> <span class="n">days</span> <span class="n">ago</span>          <span class="mf">188.3</span> <span class="n">MB</span>
+<span class="n">ubuntu</span>                      <span class="mf">14.04.2</span>             <span class="n">d2a0ecffe6fa</span>        <span class="mi">3</span> <span class="n">days</span> <span class="n">ago</span>          <span class="mf">188.3</span> <span class="n">MB</span>
+<span class="n">ubuntu</span>                      <span class="n">latest</span>              <span class="n">d2a0ecffe6fa</span>        <span class="mi">3</span> <span class="n">days</span> <span class="n">ago</span>          <span class="mf">188.3</span> <span class="n">MB</span>
+<span class="n">nginx_1</span><span class="mf">.8.0_</span><span class="n">php_fpm_5</span><span class="mf">.3.3</span>   <span class="n">v0</span><span class="mf">.1</span>                <span class="mo">01</span><span class="mi">9</span><span class="n">c313e5671</span>        <span class="mi">3</span> <span class="n">days</span> <span class="n">ago</span>          <span class="mi">552</span> <span class="n">MB</span>
+<span class="n">mysql_server_5</span><span class="mf">.1.73</span><span class="o">-</span><span class="mi">5</span>       <span class="n">latest</span>              <span class="n">df74ad94ecc7</span>        <span class="mi">10</span> <span class="n">days</span> <span class="n">ago</span>         <span class="mf">639.2</span> <span class="n">MB</span>
+<span class="n">centos6</span><span class="mf">.5</span><span class="o">-</span><span class="n">base</span>              <span class="n">latest</span>              <span class="mi">637778</span><span class="n">da53a4</span>        <span class="mi">11</span> <span class="n">days</span> <span class="n">ago</span>         <span class="mf">481.2</span> <span class="n">MB</span>
+</pre></div></body></html>
+                </div>
+                <div id="content-comments">
+                </div>
+
+            </div>
+            <div class="niu2-right-container col-md-2">
+                <div id="niu2-sidebar-meta" class="niu2-sidebar">
+                    <div class="niu2-sidebar-label"><i class="icon-calendar"></i>Published:</div>
+                    <div class="niu2-sidebar-value">2015-07-16 17:00</div>
+                    <div class="niu2-sidebar-label"><i class="icon-open-folder"></i>Category:</div>
+                    <div class="niu2-sidebar-value"><a href="/category/docker.html">docker</a></div>
+                    <div class="niu2-sidebar-label"><i class="icon-tag"></i>Tag:</div>
+                    <div class="niu2-sidebar-inter-value niu2-sidebar-tag"><a href="/tag/docker.html">docker</a><sup>1</sup></div>
+                    <div class="niu2-sidebar-inter-value niu2-sidebar-tag"><a href="/tag/paas.html">paas</a><sup>1</sup></div>
+                </div>
+
+                <div id="niu2-sidebar-toc" class="niu2-sidebar" data-status="closed">
+                    <div class="niu2-sidebar-label">
+                        <i id="niu2-sidebar-toc-ctrl" class="icon-open-tocs"></i>TOC
+                    </div>
+                    <ul id="niu2-sidebar-toc-list">
+                        <li><a href="#content-heading">在centos65_x86_64安装体验docker</a></li>
+                        <li><a href='#kerenl'>升级kerenl</a></li><li><a href='#docker-docker-version-150-build-a8a31ef150'>安装docker( Docker version 1.5.0, build a8a31ef/1.5.0)</a><ul><li><a href='#selinuxlxc'>取消selinux，因为它会干扰lxc的正常功能</a></li><li><a href='#fedora-epel'>安装 Fedora EPEL</a></li><li><a href='#hop5-repo'>添加 hop5 repo地址</a></li><li><a href='#docker-io'>安装 docker-io</a></li></ul></li><li><a href='#centos-65'>制作镜像 centos 6.5</a></li><li><a href='#'>启动容器</a></li><li><a href='#contianer-pid-ip'>获取contianer pid ip</a></li><li><a href='#api'>API:</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="niu2-footer">
+            <div id="body-footer" class="col-md-6 col-md-offset-2">
+                <hr/>
+                <p>
+                    Powered by <a href="https://github.com/getpelican/pelican">Pelican</a>, 
+                    <a href="https://github.com/mawenbao/niu-x2-sidebar">theme</a> built with <a href="http://getbootstrap.com">Bootstrap3</a>
+                    by <a href="http://blog.atime.me">Ma Wenbao</a>, icons by 
+                    <a href="http://fortawesome.github.io/Font-Awesome">Font Awesome</a>.
+                </p>
+                <p>
+                    ©
+                            2015
+                    <a class="niu2-footer-link" href="">Gavin</a>
+                </p>
+                <p class="niu2-icons">
+                </p>
+            </div>
+        </div>
+
+        <div id="niu2-pygments" data-theme="github"></div>
+        <script type="text/javascript" src="/theme/js/jquery-1.11.0.min.js"></script>
+        <script type="text/javascript" src="/theme/js/niu2.min.js"></script>
+        <script type="text/javascript" src="/theme/js/bootstrap.min.js"></script>
+        <script type="text/javascript">
+            onContentLoaded();
+        </script>
+    </body>
+</html>
