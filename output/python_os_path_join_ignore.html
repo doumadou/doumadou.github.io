@@ -3,11 +3,12 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Tags - LearnLog</title>
+        <title>python os.path.join注意事项 - LearnLog</title>
         <link rel="shortcut icon" type="image/x-icon" href="/favicon.png">
         <link rel="stylesheet" href="/theme/css/bootstrap.min.css" type="text/css" />
         <link rel="stylesheet" href="/theme/font-icons/style.min.css" type="text/css" />
         <link rel="stylesheet" href="/theme/css/niu2.min.css" type="text/css" />
+        <link rel="canonical" href="/python_os_path_join_ignore.html" />
         <script type="text/javascript">window.onload=function(){};</script>
         <!--[if lt IE 9]>
             <script src="/theme/js/html5shiv.js"></script>
@@ -51,19 +52,40 @@
         </div>
 
         <div id="body-content">
-        <div class="col-md-8 col-md-offset-2">
-            <h1><i class="icon-tags"></i>Tag</h1>
-            <input id="niu2-tagcloud-filter-input" type="text" placeholder="filter tags"
-                   class="form-control pull-left" onkeyup="tag_filter()" autofocus>
-            <button class="btn btn-success niu2-button" 
-                    onclick="$('#niu2-tagcloud-filter-input').val('');tag_filter()">clear</button>
-            <div id="niu2-tagcloud">
+            <div class="col-md-8 col-md-offset-2">
+                <h1 id="content-heading">python os.path.join注意事项</h1>
             </div>
-        </div>
+            <div id="niu2-left-container" class="col-md-6 col-md-offset-2 with-right-border">
+                <div id="niu2-main-content">
+                    <html><body><p>os.path.join的第二参数，如果以'/'开头，那个第一个参数将被忽略。</p></body></html>
+                </div>
+                <div id="content-comments">
+                </div>
+
+            </div>
+            <div class="niu2-right-container col-md-2">
+                <div id="niu2-sidebar-meta" class="niu2-sidebar">
+                    <div class="niu2-sidebar-label"><i class="icon-calendar"></i>Published:</div>
+                    <div class="niu2-sidebar-value">2015-07-21 17:30</div>
+                    <div class="niu2-sidebar-label"><i class="icon-open-folder"></i>Category:</div>
+                    <div class="niu2-sidebar-value"><a href="/category/python.html">Python</a></div>
+                    <div class="niu2-sidebar-label"><i class="icon-tag"></i>Tag:</div>
+                </div>
+
+                <div id="niu2-sidebar-toc" class="niu2-sidebar" data-status="closed">
+                    <div class="niu2-sidebar-label">
+                        <i id="niu2-sidebar-toc-ctrl" class="icon-open-tocs"></i>TOC
+                    </div>
+                    <ul id="niu2-sidebar-toc-list">
+                        <li><a href="#content-heading">python os.path.join注意事项</a></li>
+                        
+                    </ul>
+                </div>
+            </div>
         </div>
 
         <div class="niu2-footer">
-            <div id="body-footer" class="col-md-8 col-md-offset-2">
+            <div id="body-footer" class="col-md-6 col-md-offset-2">
                 <hr/>
                 <p>
                     Powered by <a href="https://github.com/getpelican/pelican">Pelican</a>, 
@@ -85,24 +107,8 @@
         <script type="text/javascript" src="/theme/js/jquery-1.11.0.min.js"></script>
         <script type="text/javascript" src="/theme/js/niu2.min.js"></script>
         <script type="text/javascript" src="/theme/js/bootstrap.min.js"></script>
-        <script type="text/javascript" src="/theme/js/tagcloud.min.js"></script>
         <script type="text/javascript">
-            
-            var tc = TagCloud.create();
-            tc.add('[]', 1, '/tag/.html', null);
-            tc.add('paas', 1, '/tag/paas.html', null);
-            tc.add('publishing', 1, '/tag/publishing.html', null);
-            tc.add('pelican', 1, '/tag/pelican.html', null);
-            tc.add('python', 1, '/tag/python.html', null);
-            tc.add('django', 1, '/tag/django.html', null);
-            tc.add('docker', 1, '/tag/docker.html', null);
-            tc.loadEffector('CountSize');tc.loadEffector('CountSize');
-
-            function tag_filter() {
-              tc.searchAndDisplay('niu2-tagcloud', $('#niu2-tagcloud-filter-input').val());
-              return false;
-            }
-            tc.setup('niu2-tagcloud');
+            onContentLoaded();
         </script>
     </body>
 </html>

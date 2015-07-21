@@ -3,7 +3,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Tags - LearnLog</title>
+        <title>Tag python - LearnLog</title>
         <link rel="shortcut icon" type="image/x-icon" href="/favicon.png">
         <link rel="stylesheet" href="/theme/css/bootstrap.min.css" type="text/css" />
         <link rel="stylesheet" href="/theme/font-icons/style.min.css" type="text/css" />
@@ -51,15 +51,38 @@
         </div>
 
         <div id="body-content">
-        <div class="col-md-8 col-md-offset-2">
-            <h1><i class="icon-tags"></i>Tag</h1>
-            <input id="niu2-tagcloud-filter-input" type="text" placeholder="filter tags"
-                   class="form-control pull-left" onkeyup="tag_filter()" autofocus>
-            <button class="btn btn-success niu2-button" 
-                    onclick="$('#niu2-tagcloud-filter-input').val('');tag_filter()">clear</button>
-            <div id="niu2-tagcloud">
+            <div class="col-md-8 col-md-offset-2">
+                <h1 class="niu2-index-title"><i class="icon-tag icon-lg"></i>python</h1>
             </div>
-        </div>
+
+            <div class="col-md-8 col-md-offset-2">
+                <div class="niu2-index-article">
+                    <div class="niu2-index-article-title">
+                        <span>
+                            <a href="/django_admin_css_404.html">Django admin static文件404</a>
+                        </span>
+                    </div>
+                    <div class="niu2-meta-index">
+                        <span class="niu2-meta-date-index">
+                            <i class="icon-calendar"></i>2015-07-21
+                        </span>
+                        <span class="niu2-meta-category-index">
+                            <i class="icon-folder-open"></i>Python
+                        </span>
+                        <span class="niu2-meta-tag-index">
+                            <i class="icon-tag"></i>
+                            <a href="/tag/python.html">python</a>
+                            <a href="/tag/django.html">django</a>
+                        </span>
+                    </div>
+                    <div class="niu2-article-summary">
+                        <p>Django admin 资源文件404</p>
+                    </div>
+                </div>
+
+
+
+            </div>
         </div>
 
         <div class="niu2-footer">
@@ -85,24 +108,7 @@
         <script type="text/javascript" src="/theme/js/jquery-1.11.0.min.js"></script>
         <script type="text/javascript" src="/theme/js/niu2.min.js"></script>
         <script type="text/javascript" src="/theme/js/bootstrap.min.js"></script>
-        <script type="text/javascript" src="/theme/js/tagcloud.min.js"></script>
         <script type="text/javascript">
-            
-            var tc = TagCloud.create();
-            tc.add('[]', 1, '/tag/.html', null);
-            tc.add('paas', 1, '/tag/paas.html', null);
-            tc.add('publishing', 1, '/tag/publishing.html', null);
-            tc.add('pelican', 1, '/tag/pelican.html', null);
-            tc.add('python', 1, '/tag/python.html', null);
-            tc.add('django', 1, '/tag/django.html', null);
-            tc.add('docker', 1, '/tag/docker.html', null);
-            tc.loadEffector('CountSize');tc.loadEffector('CountSize');
-
-            function tag_filter() {
-              tc.searchAndDisplay('niu2-tagcloud', $('#niu2-tagcloud-filter-input').val());
-              return false;
-            }
-            tc.setup('niu2-tagcloud');
         </script>
     </body>
 </html>
