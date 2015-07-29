@@ -3,12 +3,12 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Django admin static文件404 - LearnLog</title>
+        <title>Golang用for实现while - LearnLog</title>
         <link rel="shortcut icon" type="image/x-icon" href="/favicon.png">
         <link rel="stylesheet" href="http://doumadou.github.io/theme/css/bootstrap.min.css" type="text/css" />
         <link rel="stylesheet" href="http://doumadou.github.io/theme/font-icons/style.min.css" type="text/css" />
         <link rel="stylesheet" href="http://doumadou.github.io/theme/css/niu2.min.css" type="text/css" />
-        <link rel="canonical" href="http://doumadou.github.io/django_admin_css_404.html" />
+        <link rel="canonical" href="http://doumadou.github.io/golang-while.html" />
         <script type="text/javascript">window.onload=function(){};</script>
         <!--[if lt IE 9]>
             <script src="http://doumadou.github.io/theme/js/html5shiv.js"></script>
@@ -53,22 +53,36 @@
 
         <div id="body-content">
             <div class="col-md-8 col-md-offset-2">
-                <h1 id="content-heading">Django admin static文件404</h1>
+                <h1 id="content-heading">Golang用for实现while</h1>
             </div>
             <div id="niu2-left-container" class="col-md-6 col-md-offset-2 with-right-border">
                 <div id="niu2-main-content">
-                    <html><body><p>处理Django admin static的资源文件404的文件。</p>
-<h2 id="">方法一:</h2>
-<p>copy django下admin的static文件到项目中的static文件夹中。</p>
-<h2 id="_1">方法二:</h2>
-<p>在urls.py中直接添加一条rule</p>
-<div class="codehilite"><pre><span class="n">url</span><span class="p">(</span><span class="n">r</span><span class="s">'^static/admin/(?P&lt;path&gt;.*)$'</span><span class="p">,</span> <span class="s">'django.views.static.serve'</span><span class="p">,</span> <span class="p">{</span><span class="s">'document_root'</span><span class="p">:</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="nb">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">django</span><span class="o">.</span><span class="n">__file__</span><span class="p">),</span> <span class="s">"contrib/admin/static/admin/"</span><span class="p">)})</span>
+                    <html><body><p>Golang没有while关键词，所有用for实现while的功能。</p>
+<p>很简单，将for二个;号两边的赋值去掉</p>
+<p>例</p>
+<div class="codehilite"><pre><span class="k">for</span> <span class="p">;;</span> <span class="p">{</span>
+<span class="p">}</span>
 </pre></div>
-<p>不要忘记在前面import os</p></body></html>
+<p>实例如下</p>
+<div class="codehilite"><pre><span class="nb">package</span> <span class="n">main</span>
+
+<span class="nb">import</span> <span class="p">(</span>
+    <span class="s">"time"</span>
+<span class="p">)</span>
+
+<span class="n">func</span> <span class="n">main</span><span class="p">()</span> <span class="p">{</span>
+
+    <span class="k">for</span> <span class="p">;;{</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">"====\n"</span><span class="p">)</span>
+        <span class="nb">time</span><span class="o">.</span><span class="n">Sleep</span><span class="p">(</span><span class="mi">1</span> <span class="o">*</span> <span class="mi">1000</span> <span class="o">*</span> <span class="mi">1000</span> <span class="o">*</span><span class="mi">1000</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+<p>注意：time的Sleep方法中的单位为纳秒。</p></body></html>
                 </div>
                 <div id="content-comments">
                     <!-- 多说评论框 start -->
-                    <div class="ds-thread" data-thread-key="/django_admin_css_404.html" data-title="Django admin static文件404" data-url="http://doumadou.github.io/django_admin_css_404.html">
+                    <div class="ds-thread" data-thread-key="/golang-while.html" data-title="Golang用for实现while" data-url="http://doumadou.github.io/golang-while.html">
                     </div>
                     <!-- 多说评论框 end -->
                     <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
@@ -90,12 +104,11 @@
             <div class="niu2-right-container col-md-2">
                 <div id="niu2-sidebar-meta" class="niu2-sidebar">
                     <div class="niu2-sidebar-label"><i class="icon-calendar"></i>Published:</div>
-                    <div class="niu2-sidebar-value">2015-07-21 17:09</div>
+                    <div class="niu2-sidebar-value">2015-07-28 14:10</div>
                     <div class="niu2-sidebar-label"><i class="icon-open-folder"></i>Category:</div>
-                    <div class="niu2-sidebar-value"><a href="http://doumadou.github.io/category/python.html">Python</a></div>
+                    <div class="niu2-sidebar-value"><a href="http://doumadou.github.io/category/golang.html">Golang</a></div>
                     <div class="niu2-sidebar-label"><i class="icon-tag"></i>Tag:</div>
-                    <div class="niu2-sidebar-inter-value niu2-sidebar-tag"><a href="http://doumadou.github.io/tag/python.html">python</a><sup>1</sup></div>
-                    <div class="niu2-sidebar-inter-value niu2-sidebar-tag"><a href="http://doumadou.github.io/tag/django.html">django</a><sup>1</sup></div>
+                    <div class="niu2-sidebar-inter-value niu2-sidebar-tag"><a href="http://doumadou.github.io/tag/golang.html">Golang</a><sup>2</sup></div>
                 </div>
 
                 <div id="niu2-sidebar-toc" class="niu2-sidebar" data-status="closed">
@@ -103,8 +116,8 @@
                         <i id="niu2-sidebar-toc-ctrl" class="icon-open-tocs"></i>TOC
                     </div>
                     <ul id="niu2-sidebar-toc-list">
-                        <li><a href="#content-heading">Django admin static文件404</a></li>
-                        <li><a href='#'>方法一:</a></li><li><a href='#_1'>方法二:</a></li>
+                        <li><a href="#content-heading">Golang用for实现while</a></li>
+                        
                         <li><a href="#content-comments">Comments</a></li>
                     </ul>
                 </div>

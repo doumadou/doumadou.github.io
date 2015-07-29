@@ -5,14 +5,14 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>docker制作centos6.5基础镜像并上传docker hub - LearnLog</title>
         <link rel="shortcut icon" type="image/x-icon" href="/favicon.png">
-        <link rel="stylesheet" href="/theme/css/bootstrap.min.css" type="text/css" />
-        <link rel="stylesheet" href="/theme/font-icons/style.min.css" type="text/css" />
-        <link rel="stylesheet" href="/theme/css/niu2.min.css" type="text/css" />
-        <link rel="canonical" href="/build-docker-base-image-push-hub.html" />
+        <link rel="stylesheet" href="http://doumadou.github.io/theme/css/bootstrap.min.css" type="text/css" />
+        <link rel="stylesheet" href="http://doumadou.github.io/theme/font-icons/style.min.css" type="text/css" />
+        <link rel="stylesheet" href="http://doumadou.github.io/theme/css/niu2.min.css" type="text/css" />
+        <link rel="canonical" href="http://doumadou.github.io/build-docker-base-image-push-hub.html" />
         <script type="text/javascript">window.onload=function(){};</script>
         <!--[if lt IE 9]>
-            <script src="/theme/js/html5shiv.js"></script>
-            <script src="/theme/js/respond.min.js"></script>
+            <script src="http://doumadou.github.io/theme/js/html5shiv.js"></script>
+            <script src="http://doumadou.github.io/theme/js/respond.min.js"></script>
         <![endif]-->
     </head>
     <body> 
@@ -25,16 +25,16 @@
                             <span class="icon-bar"></span>
                             <span class="icon-bar"></span>
                         </button>
-                        <a class="navbar-brand" href="">
+                        <a class="navbar-brand" href="http://doumadou.github.io">
                             <i class="icon-home"></i>LearnLog
                         </a>
                     </div>
                     <nav class="collapse navbar-collapse bs-navbar-collapse" role="navigation">
                         <ul class="nav navbar-nav">
-                        <li><a href="/tags.html">
+                        <li><a href="http://doumadou.github.io/tags.html">
                                 <i class="icon-tag"></i>Tag</a>
                         </li>
-                        <li><a href="/archives.html">
+                        <li><a href="http://doumadou.github.io/archives.html">
                                 <i class="icon-archive"></i>Archive
                             </a>
                         </li>
@@ -91,6 +91,23 @@ centos6.5-base      latest              637778da53a4        19 minutes ago      
 <p>近500Ｍ的镜像一下子就上传完成了。感觉很爽啊^-^。</p></body></html>
                 </div>
                 <div id="content-comments">
+                    <!-- 多说评论框 start -->
+                    <div class="ds-thread" data-thread-key="/build-docker-base-image-push-hub.html" data-title="docker制作centos6.5基础镜像并上传docker hub" data-url="http://doumadou.github.io/build-docker-base-image-push-hub.html">
+                    </div>
+                    <!-- 多说评论框 end -->
+                    <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+                    <script type="text/javascript">
+                        var duoshuoQuery = { short_name: 'doumadou' };
+                        (function() {
+                            var ds = document.createElement('script');
+                            ds.type = 'text/javascript';ds.async = true;
+                            ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+                            ds.charset = 'UTF-8';
+                            (document.getElementsByTagName('head')[0] 
+                             || document.getElementsByTagName('body')[0]).appendChild(ds);
+                        })();
+                    </script>
+                    <!-- 多说公共JS代码 end -->
                 </div>
 
             </div>
@@ -99,9 +116,9 @@ centos6.5-base      latest              637778da53a4        19 minutes ago      
                     <div class="niu2-sidebar-label"><i class="icon-calendar"></i>Published:</div>
                     <div class="niu2-sidebar-value">2015-07-21 17:09</div>
                     <div class="niu2-sidebar-label"><i class="icon-open-folder"></i>Category:</div>
-                    <div class="niu2-sidebar-value"><a href="/category/docker.html">docker</a></div>
+                    <div class="niu2-sidebar-value"><a href="http://doumadou.github.io/category/docker.html">docker</a></div>
                     <div class="niu2-sidebar-label"><i class="icon-tag"></i>Tag:</div>
-                    <div class="niu2-sidebar-inter-value niu2-sidebar-tag"><a href="/tag/docker.html">docker</a><sup>2</sup></div>
+                    <div class="niu2-sidebar-inter-value niu2-sidebar-tag"><a href="http://doumadou.github.io/tag/docker.html">docker</a><sup>2</sup></div>
                 </div>
 
                 <div id="niu2-sidebar-toc" class="niu2-sidebar" data-status="closed">
@@ -111,6 +128,7 @@ centos6.5-base      latest              637778da53a4        19 minutes ago      
                     <ul id="niu2-sidebar-toc-list">
                         <li><a href="#content-heading">docker制作centos6.5基础镜像并上传docker hub</a></li>
                         <li><a href='#'>制作基础镜像</a></li><li><a href='#docker-hub'>将制作好的镜像上传到docker hub.</a><ul><li><a href='#docker-hub_1'>注册docker hub账号</a></li><li><a href='#docker'>登陆docker账号</a></li><li><a href='#pushdocker-hub'>Push镜像到docker hub</a></li></ul></li>
+                        <li><a href="#content-comments">Comments</a></li>
                     </ul>
                 </div>
             </div>
@@ -128,7 +146,7 @@ centos6.5-base      latest              637778da53a4        19 minutes ago      
                 <p>
                     ©
                             2015
-                    <a class="niu2-footer-link" href="">Gavin</a>
+                    <a class="niu2-footer-link" href="http://doumadou.github.io">Gavin</a>
                 </p>
                 <p class="niu2-icons">
                 </p>
@@ -136,9 +154,9 @@ centos6.5-base      latest              637778da53a4        19 minutes ago      
         </div>
 
         <div id="niu2-pygments" data-theme="github"></div>
-        <script type="text/javascript" src="/theme/js/jquery-1.11.0.min.js"></script>
-        <script type="text/javascript" src="/theme/js/niu2.min.js"></script>
-        <script type="text/javascript" src="/theme/js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="http://doumadou.github.io/theme/js/jquery-1.11.0.min.js"></script>
+        <script type="text/javascript" src="http://doumadou.github.io/theme/js/niu2.min.js"></script>
+        <script type="text/javascript" src="http://doumadou.github.io/theme/js/bootstrap.min.js"></script>
         <script type="text/javascript">
             onContentLoaded();
         </script>

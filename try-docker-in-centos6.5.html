@@ -5,14 +5,14 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>在centos65_x86_64安装体验docker - LearnLog</title>
         <link rel="shortcut icon" type="image/x-icon" href="/favicon.png">
-        <link rel="stylesheet" href="/theme/css/bootstrap.min.css" type="text/css" />
-        <link rel="stylesheet" href="/theme/font-icons/style.min.css" type="text/css" />
-        <link rel="stylesheet" href="/theme/css/niu2.min.css" type="text/css" />
-        <link rel="canonical" href="/try-docker-in-centos6.5.html" />
+        <link rel="stylesheet" href="http://doumadou.github.io/theme/css/bootstrap.min.css" type="text/css" />
+        <link rel="stylesheet" href="http://doumadou.github.io/theme/font-icons/style.min.css" type="text/css" />
+        <link rel="stylesheet" href="http://doumadou.github.io/theme/css/niu2.min.css" type="text/css" />
+        <link rel="canonical" href="http://doumadou.github.io/try-docker-in-centos6.5.html" />
         <script type="text/javascript">window.onload=function(){};</script>
         <!--[if lt IE 9]>
-            <script src="/theme/js/html5shiv.js"></script>
-            <script src="/theme/js/respond.min.js"></script>
+            <script src="http://doumadou.github.io/theme/js/html5shiv.js"></script>
+            <script src="http://doumadou.github.io/theme/js/respond.min.js"></script>
         <![endif]-->
     </head>
     <body> 
@@ -25,16 +25,16 @@
                             <span class="icon-bar"></span>
                             <span class="icon-bar"></span>
                         </button>
-                        <a class="navbar-brand" href="">
+                        <a class="navbar-brand" href="http://doumadou.github.io">
                             <i class="icon-home"></i>LearnLog
                         </a>
                     </div>
                     <nav class="collapse navbar-collapse bs-navbar-collapse" role="navigation">
                         <ul class="nav navbar-nav">
-                        <li><a href="/tags.html">
+                        <li><a href="http://doumadou.github.io/tags.html">
                                 <i class="icon-tag"></i>Tag</a>
                         </li>
-                        <li><a href="/archives.html">
+                        <li><a href="http://doumadou.github.io/archives.html">
                                 <i class="icon-archive"></i>Archive
                             </a>
                         </li>
@@ -143,6 +143,23 @@
 </pre></div></body></html>
                 </div>
                 <div id="content-comments">
+                    <!-- 多说评论框 start -->
+                    <div class="ds-thread" data-thread-key="/try-docker-in-centos6.5.html" data-title="在centos65_x86_64安装体验docker" data-url="http://doumadou.github.io/try-docker-in-centos6.5.html">
+                    </div>
+                    <!-- 多说评论框 end -->
+                    <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+                    <script type="text/javascript">
+                        var duoshuoQuery = { short_name: 'doumadou' };
+                        (function() {
+                            var ds = document.createElement('script');
+                            ds.type = 'text/javascript';ds.async = true;
+                            ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+                            ds.charset = 'UTF-8';
+                            (document.getElementsByTagName('head')[0] 
+                             || document.getElementsByTagName('body')[0]).appendChild(ds);
+                        })();
+                    </script>
+                    <!-- 多说公共JS代码 end -->
                 </div>
 
             </div>
@@ -151,10 +168,10 @@
                     <div class="niu2-sidebar-label"><i class="icon-calendar"></i>Published:</div>
                     <div class="niu2-sidebar-value">2015-07-16 17:00</div>
                     <div class="niu2-sidebar-label"><i class="icon-open-folder"></i>Category:</div>
-                    <div class="niu2-sidebar-value"><a href="/category/docker.html">docker</a></div>
+                    <div class="niu2-sidebar-value"><a href="http://doumadou.github.io/category/docker.html">docker</a></div>
                     <div class="niu2-sidebar-label"><i class="icon-tag"></i>Tag:</div>
-                    <div class="niu2-sidebar-inter-value niu2-sidebar-tag"><a href="/tag/docker.html">docker</a><sup>2</sup></div>
-                    <div class="niu2-sidebar-inter-value niu2-sidebar-tag"><a href="/tag/paas.html">paas</a><sup>1</sup></div>
+                    <div class="niu2-sidebar-inter-value niu2-sidebar-tag"><a href="http://doumadou.github.io/tag/docker.html">docker</a><sup>2</sup></div>
+                    <div class="niu2-sidebar-inter-value niu2-sidebar-tag"><a href="http://doumadou.github.io/tag/paas.html">paas</a><sup>1</sup></div>
                 </div>
 
                 <div id="niu2-sidebar-toc" class="niu2-sidebar" data-status="closed">
@@ -164,6 +181,7 @@
                     <ul id="niu2-sidebar-toc-list">
                         <li><a href="#content-heading">在centos65_x86_64安装体验docker</a></li>
                         <li><a href='#kerenl'>升级kerenl</a></li><li><a href='#docker-docker-version-150-build-a8a31ef150'>安装docker( Docker version 1.5.0, build a8a31ef/1.5.0)</a><ul><li><a href='#selinuxlxc'>取消selinux，因为它会干扰lxc的正常功能</a></li><li><a href='#fedora-epel'>安装 Fedora EPEL</a></li><li><a href='#hop5-repo'>添加 hop5 repo地址</a></li><li><a href='#docker-io'>安装 docker-io</a></li></ul></li><li><a href='#centos-65'>制作镜像 centos 6.5</a></li><li><a href='#'>启动容器</a></li><li><a href='#contianer-pid-ip'>获取contianer pid ip</a></li><li><a href='#api'>API:</a></li>
+                        <li><a href="#content-comments">Comments</a></li>
                     </ul>
                 </div>
             </div>
@@ -181,7 +199,7 @@
                 <p>
                     ©
                             2015
-                    <a class="niu2-footer-link" href="">Gavin</a>
+                    <a class="niu2-footer-link" href="http://doumadou.github.io">Gavin</a>
                 </p>
                 <p class="niu2-icons">
                 </p>
@@ -189,9 +207,9 @@
         </div>
 
         <div id="niu2-pygments" data-theme="github"></div>
-        <script type="text/javascript" src="/theme/js/jquery-1.11.0.min.js"></script>
-        <script type="text/javascript" src="/theme/js/niu2.min.js"></script>
-        <script type="text/javascript" src="/theme/js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="http://doumadou.github.io/theme/js/jquery-1.11.0.min.js"></script>
+        <script type="text/javascript" src="http://doumadou.github.io/theme/js/niu2.min.js"></script>
+        <script type="text/javascript" src="http://doumadou.github.io/theme/js/bootstrap.min.js"></script>
         <script type="text/javascript">
             onContentLoaded();
         </script>
