@@ -3,12 +3,12 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Golang动态数组 - LearnLog</title>
+        <title>5分钟搭建自己的磁力搜索网站 - LearnLog</title>
         <link rel="shortcut icon" type="image/x-icon" href="/favicon.png">
         <link rel="stylesheet" href="http://doumadou.github.io/theme/css/bootstrap.min.css" type="text/css" />
         <link rel="stylesheet" href="http://doumadou.github.io/theme/font-icons/style.min.css" type="text/css" />
         <link rel="stylesheet" href="http://doumadou.github.io/theme/css/niu2.min.css" type="text/css" />
-        <link rel="canonical" href="http://doumadou.github.io/golang-dynamic-array.html" />
+        <link rel="canonical" href="http://doumadou.github.io/5fen-zhong-da-jian-zi-ji-de-ci-li-sou-suo-wang-zhan.html" />
         <script type="text/javascript">window.onload=function(){};</script>
         <!--[if lt IE 9]>
             <script src="http://doumadou.github.io/theme/js/html5shiv.js"></script>
@@ -53,68 +53,70 @@
 
         <div id="body-content">
             <div class="col-md-8 col-md-offset-2">
-                <h1 id="content-heading">Golang动态数组</h1>
+                <h1 id="content-heading">5分钟搭建自己的磁力搜索网站</h1>
             </div>
             <div id="niu2-left-container" class="col-md-6 col-md-offset-2 with-right-border">
                 <div id="niu2-main-content">
-                    <html><body><p>Golang使用动态数组</p>
-<h3 id="">数组申明</h3>
-<div class="codehilite"><pre><span class="n">var</span> <span class="n">dynaArr</span> <span class="o">[]</span><span class="n">string</span>
+                    <html><body><p>本文基于SSBC(手撕包菜) + docker搭建</p>
+<p>环境说明:</p>
+<p>搜索引擎使用的是小虾的开源ssbc</p>
+<p>docker镜像是我做最简单的镜像</p>
+<p>VPS用的是DigitOcean提供的ubuntu14.04带docker的镜像生成的vps</p>
+<p>没有DigitOcean账号的，可通过如下链接(https://www.digitalocean.com/?refcode=57030d16bf16)注册，账号注册成功，可得10$的（相当于免费使用2个月）.</p>
+<p><a href="https://www.digitalocean.com/?refcode=57030d16bf16" target="_blank">账号注册</a></p>
+<p>好了，啥也不说了，一步一步按照我的步聚开工吧!</p>
+<h2 id="">准备工作</h2>
+<p>DigitOcean上创建vps.</p>
+<p>Applcation选择docker镜像</p>
+<p>如下图所示：</p>
+<p><img alt="DigitOcean镜像选择docker" src="/images/20150804003313.png"/></p>
+<h2 id="_1">第一步下载代码</h2>
+<div class="codehilite"><pre><span class="c"># git clone https://github.com/doumadou/ssbc</span>
 </pre></div>
-<h3 id="_1">动态添加成员</h3>
-<div class="codehilite"><pre><span class="n">dynaArr</span> <span class="o">=</span> <span class="n">append</span><span class="p">(</span><span class="n">dynaArr</span><span class="p">,</span> <span class="s">"one"</span><span class="p">)</span>
+<h2 id="docker">下载docker 镜像</h2>
+<p>速度很快，几分钟就搞定了</p>
+<div class="codehilite"><pre><span class="n">root</span><span class="nv">@ssbc:</span><span class="o">~</span><span class="c1"># docker pull doumadou/cili_s_s_b_c:centos7</span>
+<span class="n">Pulling</span> <span class="n">repository</span> <span class="n">doumadou</span><span class="o">/</span><span class="n">cili_s_s_b_c</span>
+<span class="n">e1583d9521f4:</span> <span class="n">Download</span> <span class="n">complete</span> 
+<span class="mi">436</span><span class="n">cb282cd02:</span> <span class="n">Download</span> <span class="n">complete</span> 
+<span class="mi">21</span><span class="n">af27143b54:</span> <span class="n">Download</span> <span class="n">complete</span> 
+<span class="n">d28e315add15:</span> <span class="n">Download</span> <span class="n">complete</span> 
+<span class="n">ecf3924b28e9:</span> <span class="n">Download</span> <span class="n">complete</span> 
+<span class="mi">2</span><span class="n">f1d5de57db2:</span> <span class="n">Download</span> <span class="n">complete</span> 
+<span class="n">f06e14257d37:</span> <span class="n">Download</span> <span class="n">complete</span> 
+<span class="mi">5</span><span class="n">a7cb6bb4a0e:</span> <span class="n">Download</span> <span class="n">complete</span> 
+<span class="n">a19d83d19ff8:</span> <span class="n">Download</span> <span class="n">complete</span> 
+<span class="n">b4db54995744:</span> <span class="n">Download</span> <span class="n">complete</span> 
+<span class="n">ee71504a9dce:</span> <span class="n">Download</span> <span class="n">complete</span> 
+<span class="n">Status:</span> <span class="n">Downloaded</span> <span class="n">newer</span> <span class="n">image</span> <span class="k">for</span> <span class="n">doumadou</span><span class="o">/</span><span class="n">cili_s_s_b_c:centos7</span>
+
+
+<span class="n">root</span><span class="nv">@ssbc:</span><span class="o">~</span><span class="c1"># docker images</span>
+<span class="n">REPOSITORY</span>              <span class="n">TAG</span>                 <span class="n">IMAGE</span> <span class="n">ID</span>            <span class="n">CREATED</span>             <span class="n">VIRTUAL</span> <span class="n">SIZE</span>
+<span class="n">doumadou</span><span class="o">/</span><span class="n">cili_s_s_b_c</span>   <span class="n">centos7</span>             <span class="n">e1583d9521f4</span>        <span class="mi">12</span> <span class="n">days</span> <span class="n">ago</span>         <span class="mf">934.9</span> <span class="n">MB</span>
 </pre></div>
-<h3 id="_1_2">实例</h3>
-<div class="codehilite"><pre><span class="nb">package</span> <span class="n">main</span>
-
-<span class="nb">import</span>  <span class="p">(</span>
-    <span class="s">"fmt"</span>
-<span class="p">)</span>
-
-<span class="n">func</span> <span class="n">main</span><span class="p">()</span> <span class="p">{</span>
-
-    <span class="n">var</span> <span class="n">dynaArr</span> <span class="o">[]</span><span class="n">string</span>
-
-    <span class="n">dynaArr</span> <span class="o">=</span> <span class="n">append</span><span class="p">(</span><span class="n">dynaArr</span><span class="p">,</span> <span class="s">"one"</span><span class="p">)</span>
-    <span class="n">dynaArr</span> <span class="o">=</span> <span class="n">append</span><span class="p">(</span><span class="n">dynaArr</span><span class="p">,</span> <span class="s">"two"</span><span class="p">)</span>
-    <span class="n">dynaArr</span> <span class="o">=</span> <span class="n">append</span><span class="p">(</span><span class="n">dynaArr</span><span class="p">,</span> <span class="s">"three"</span><span class="p">)</span>
-
-    <span class="n">fmt</span><span class="o">.</span><span class="n">Println</span><span class="p">(</span><span class="n">dynaArr</span><span class="p">)</span>
-<span class="p">}</span>
+<p>如果存在cili_s_s_b_c则说明镜像下载成功了</p>
+<h2 id="_1_2">启动网站</h2>
+<div class="codehilite"><pre><span class="c1"># docker run -d --net=host -v /root/ssbc:/home/wwwroot/ssbc doumadou/cili_s_s_b_c:centos7</span>
+<span class="n">b82fe943afecaab6bb15bfe4f9f9abe001d6ef51971c729fab3c7479f3ea2603</span>
 </pre></div>
-<h3 id="_1_2_3">结构体数组</h3>
-<div class="codehilite"><pre><span class="nb">package</span> <span class="n">main</span>
-
-<span class="nb">import</span>  <span class="p">(</span>
-    <span class="s">"fmt"</span>
-<span class="p">)</span>
-
-<span class="n">type</span> <span class="n">A</span> <span class="n">struct</span><span class="p">{</span>
-    <span class="n">Path</span>    <span class="n">string</span>
-    <span class="n">Length</span>  <span class="nb">int</span> 
-<span class="p">}</span>
-
-
-<span class="n">func</span> <span class="n">main</span><span class="p">()</span> <span class="p">{</span>
-
-    <span class="n">var</span> <span class="n">dynaArr</span> <span class="o">[]</span><span class="n">A</span>
-
-
-    <span class="n">t</span> <span class="p">:</span><span class="o">=</span> <span class="n">A</span><span class="p">{</span><span class="s">"/tmp"</span><span class="p">,</span> <span class="mi">1023</span><span class="p">}</span>
-
-    <span class="n">dynaArr</span> <span class="o">=</span> <span class="n">append</span><span class="p">(</span><span class="n">dynaArr</span><span class="p">,</span> <span class="n">t</span><span class="p">)</span>
-    <span class="n">dynaArr</span> <span class="o">=</span> <span class="n">append</span><span class="p">(</span><span class="n">dynaArr</span><span class="p">,</span> <span class="n">A</span><span class="p">{</span><span class="s">"~"</span><span class="p">,</span> <span class="mi">2048</span><span class="p">})</span>
-    <span class="n">t</span><span class="o">.</span><span class="n">Path</span><span class="p">,</span> <span class="n">t</span><span class="o">.</span><span class="n">Length</span> <span class="o">=</span> <span class="s">"/"</span><span class="p">,</span> <span class="mi">4096</span>
-    <span class="n">dynaArr</span> <span class="o">=</span> <span class="n">append</span><span class="p">(</span><span class="n">dynaArr</span><span class="p">,</span> <span class="n">t</span><span class="p">)</span>
-
-    <span class="n">fmt</span><span class="o">.</span><span class="n">Println</span><span class="p">(</span><span class="n">dynaArr</span><span class="p">)</span>
-<span class="p">}</span>
-</pre></div>
-<p>注意大小写，大写为公有，小写为私有</p></body></html>
+<p>说明网站及爬虫启动成功。</p>
+<h2 id="_1_2_3">查看效果</h2>
+<p>现在通过IP地址在本地打开我们刚才搭建的磁力搜索引擎</p>
+<p>效果如下：</p>
+<p><img alt="磁力网站首页" src="/images/20150804004642.png"/></p>
+<p>我们过十分钟再看一下爬虫采集的效果。</p>
+<p>十分钟后，我的查看a的相关数据效果如下：</p>
+<p><img alt="磁力网站搜索结果页" src="/images/20150806232048.png"/></p>
+<p>磁力搜索引擎网站相关信息如下:
+数据库用户名: root 密码: root
+搜索引擎后台用户名: root 密码: root</p>
+<p>再看后台效果:</p>
+<p><img alt="磁力网站搜索网站后台" src="/images/20150806232511.png"/></p></body></html>
                 </div>
                 <div id="content-comments">
                     <!-- 多说评论框 start -->
-                    <div class="ds-thread" data-thread-key="/golang-dynamic-array.html" data-title="Golang动态数组" data-url="http://doumadou.github.io/golang-dynamic-array.html">
+                    <div class="ds-thread" data-thread-key="/5fen-zhong-da-jian-zi-ji-de-ci-li-sou-suo-wang-zhan.html" data-title="5分钟搭建自己的磁力搜索网站" data-url="http://doumadou.github.io/5fen-zhong-da-jian-zi-ji-de-ci-li-sou-suo-wang-zhan.html">
                     </div>
                     <!-- 多说评论框 end -->
                     <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
@@ -136,11 +138,11 @@
             <div class="niu2-right-container col-md-2">
                 <div id="niu2-sidebar-meta" class="niu2-sidebar">
                     <div class="niu2-sidebar-label"><i class="icon-calendar"></i>Published:</div>
-                    <div class="niu2-sidebar-value">2015-07-28 10:20</div>
+                    <div class="niu2-sidebar-value">2015-08-04 15:24</div>
                     <div class="niu2-sidebar-label"><i class="icon-open-folder"></i>Category:</div>
-                    <div class="niu2-sidebar-value"><a href="http://doumadou.github.io/category/golang.html">Golang</a></div>
+                    <div class="niu2-sidebar-value"><a href="http://doumadou.github.io/category/other.html">Other</a></div>
                     <div class="niu2-sidebar-label"><i class="icon-tag"></i>Tag:</div>
-                    <div class="niu2-sidebar-inter-value niu2-sidebar-tag"><a href="http://doumadou.github.io/tag/golang.html">Golang</a><sup>4</sup></div>
+                    <div class="niu2-sidebar-inter-value niu2-sidebar-tag"><a href="http://doumadou.github.io/tag/docker.html">docker</a><sup>4</sup></div>
                 </div>
 
                 <div id="niu2-sidebar-toc" class="niu2-sidebar" data-status="closed">
@@ -148,8 +150,8 @@
                         <i id="niu2-sidebar-toc-ctrl" class="icon-open-tocs"></i>TOC
                     </div>
                     <ul id="niu2-sidebar-toc-list">
-                        <li><a href="#content-heading">Golang动态数组</a></li>
-                        <li><a href='#'>数组申明</a></li><li><a href='#_1'>动态添加成员</a></li><li><a href='#_1_2'>实例</a></li><li><a href='#_1_2_3'>结构体数组</a></li>
+                        <li><a href="#content-heading">5分钟搭建自己的磁力搜索网站</a></li>
+                        <li><a href='#'>准备工作</a></li><li><a href='#_1'>第一步下载代码</a></li><li><a href='#docker'>下载docker 镜像</a></li><li><a href='#_1_2'>启动网站</a></li><li><a href='#_1_2_3'>查看效果</a></li>
                         <li><a href="#content-comments">Comments</a></li>
                     </ul>
                 </div>
