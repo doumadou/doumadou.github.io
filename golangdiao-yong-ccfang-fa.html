@@ -60,46 +60,46 @@
                     <html><body><ol>
 <li>go文件中直接写c/c++代码，并调用</li>
 </ol>
-<div class="codehilite"><pre>    <span class="nb">package</span> <span class="n">main</span>  
+<div class="codehilite"><pre><span></span>    <span class="n">package</span> <span class="n">main</span>  
 
     <span class="o">/*</span> 
     <span class="c1">#include &lt;stdio.h&gt; </span>
     <span class="c1">#include &lt;stdlib.h&gt; </span>
     <span class="c1">#include &lt;unistd.h&gt; </span>
-    <span class="n">void</span> <span class="n">hello</span><span class="p">(</span><span class="n">const</span> <span class="n">char</span> <span class="o">*</span><span class="n">str</span><span class="p">)</span>
+    <span class="n">void</span> <span class="n">hello</span><span class="p">(</span><span class="n">const</span> <span class="n">char</span> <span class="o">*</span><span class="nb">str</span><span class="p">)</span>
     <span class="p">{</span>
-        <span class="nb">printf</span><span class="p">(</span><span class="s">"%s(%d): %s\n"</span><span class="p">,</span> <span class="n">__FUNCTION__</span><span class="p">,</span> <span class="n">__LINE__</span><span class="p">,</span> <span class="n">str</span><span class="p">);</span>
+        <span class="n">printf</span><span class="p">(</span><span class="s2">"</span><span class="si">%s</span><span class="s2">(</span><span class="si">%d</span><span class="s2">): </span><span class="si">%s</span><span class="se">\n</span><span class="s2">"</span><span class="p">,</span> <span class="n">__FUNCTION__</span><span class="p">,</span> <span class="n">__LINE__</span><span class="p">,</span> <span class="nb">str</span><span class="p">);</span>
     <span class="p">}</span>
     <span class="o">*/</span>  
-    <span class="nb">import</span> <span class="s">"C"</span>  
+    <span class="kn">import</span> <span class="s2">"C"</span>  
 
     <span class="n">func</span> <span class="n">main</span><span class="p">()</span> <span class="p">{</span>  
 
-        <span class="n">C</span><span class="o">.</span><span class="n">hello</span><span class="p">(</span><span class="n">C</span><span class="o">.</span><span class="n">CString</span><span class="p">(</span><span class="s">"call C hello func"</span><span class="p">))</span>  
+        <span class="n">C</span><span class="o">.</span><span class="n">hello</span><span class="p">(</span><span class="n">C</span><span class="o">.</span><span class="n">CString</span><span class="p">(</span><span class="s2">"call C hello func"</span><span class="p">))</span>  
     <span class="p">}</span>  
 </pre></div>
 <p>编译运行</p>
-<div class="codehilite"><pre><span class="p">[</span><span class="n">root</span><span class="nv">@localhost</span> <span class="n">test</span><span class="p">]</span><span class="c1"># go build main.go</span>
-<span class="p">[</span><span class="n">root</span><span class="nv">@localhost</span> <span class="n">test</span><span class="p">]</span><span class="c1"># ./main </span>
-<span class="n">hello</span><span class="p">(</span><span class="mi">9</span><span class="p">):</span> <span class="n">call</span> <span class="n">C</span> <span class="n">hello</span> <span class="n">func</span>
+<div class="codehilite"><pre><span></span>[root@localhost test]# go build main.go
+[root@localhost test]# ./main 
+hello(9): call C hello func
 </pre></div>
 <ol>
 <li>go调用c/c++动态库中的方法。</li>
 </ol>
-<div class="codehilite"><pre>.
+<div class="codehilite"><pre><span></span>.
 ./hello.c
 ./hello.h
 ./main.go
 </pre></div>
 <p>hello.h</p>
-<div class="codehilite"><pre><span class="cp">#ifndef ___HELLO___</span>
+<div class="codehilite"><pre><span></span><span class="cp">#ifndef ___HELLO___</span>
 <span class="cp">#define __HELLO___</span>
-<span class="kt">void</span> <span class="n">hello</span><span class="p">(</span><span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">str</span><span class="p">);</span>
+<span class="kt">void</span> <span class="nf">hello</span><span class="p">(</span><span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">str</span><span class="p">);</span>
 <span class="cp">#endif</span>
 </pre></div>
 <p>hello.c</p>
-<div class="codehilite"><pre><span class="cp">#include "hello.h"</span>
-<span class="cp">#include &lt;stdio.h&gt;</span>
+<div class="codehilite"><pre><span></span><span class="cp">#include</span> <span class="cpf">"hello.h"</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;stdio.h&gt;</span><span class="cp"></span>
 
 <span class="kt">void</span> <span class="nf">hello</span><span class="p">(</span><span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">str</span><span class="p">)</span>
 <span class="p">{</span>
@@ -107,7 +107,7 @@
 <span class="p">}</span>
 </pre></div>
 <p>main.go</p>
-<div class="codehilite"><pre><span class="nb">package</span> <span class="n">main</span>  
+<div class="codehilite"><pre><span></span><span class="n">package</span> <span class="n">main</span>  
 
 <span class="o">/*</span> 
 <span class="c1">#include &lt;stdio.h&gt; </span>
@@ -115,32 +115,32 @@
 <span class="c1">#include &lt;unistd.h&gt; </span>
 <span class="c1">#include "hello.h" </span>
 
-<span class="sr">//</span> <span class="n">intentionally</span> <span class="nb">write</span> <span class="n">the</span> <span class="n">same</span> <span class="n">LDFLAGS</span> <span class="n">differently</span> 
+<span class="o">//</span> <span class="n">intentionally</span> <span class="n">write</span> <span class="n">the</span> <span class="n">same</span> <span class="n">LDFLAGS</span> <span class="n">differently</span> 
 <span class="c1">#cgo linux LDFLAGS: -L. -lhello </span>
 <span class="c1">#cgo darwin LDFLAGS: -L. -lhello </span>
 <span class="o">*/</span>  
-<span class="nb">import</span> <span class="s">"C"</span>  
+<span class="kn">import</span> <span class="s2">"C"</span>  
 
 <span class="n">func</span> <span class="n">main</span><span class="p">()</span> <span class="p">{</span>  
 
-    <span class="n">C</span><span class="o">.</span><span class="n">hello</span><span class="p">(</span><span class="n">C</span><span class="o">.</span><span class="n">CString</span><span class="p">(</span><span class="s">"call C hello func"</span><span class="p">))</span>  
+    <span class="n">C</span><span class="o">.</span><span class="n">hello</span><span class="p">(</span><span class="n">C</span><span class="o">.</span><span class="n">CString</span><span class="p">(</span><span class="s2">"call C hello func"</span><span class="p">))</span>  
 <span class="p">}</span>  
 </pre></div>
 <p>编译运行:</p>
-<div class="codehilite"><pre><span class="p">[</span><span class="n">root</span><span class="nv">@localhost</span> <span class="n">demo</span><span class="p">]</span><span class="c1"># gcc -fPIC -shared hello.c -o libhello.so</span>
-<span class="p">[</span><span class="n">root</span><span class="nv">@localhost</span> <span class="n">demo</span><span class="p">]</span><span class="c1"># go build main.go</span>
-<span class="p">[</span><span class="n">root</span><span class="nv">@localhost</span> <span class="n">demo</span><span class="p">]</span><span class="c1"># ./main </span>
-<span class="n">hello</span><span class="p">(</span><span class="mi">6</span><span class="p">):</span> <span class="n">call</span> <span class="n">C</span> <span class="n">hello</span> <span class="n">func</span>
-<span class="p">[</span><span class="n">root</span><span class="nv">@localhost</span> <span class="n">demo</span><span class="p">]</span><span class="c1">#</span>
+<div class="codehilite"><pre><span></span>[root@localhost demo]# gcc -fPIC -shared hello.c -o libhello.so
+[root@localhost demo]# go build main.go
+[root@localhost demo]# ./main 
+hello(6): call C hello func
+[root@localhost demo]#
 </pre></div>
 <ol>
 <li>go 使用线程库</li>
 </ol>
 <p>仅修改hello.c文件</p>
-<div class="codehilite"><pre><span class="p">[</span><span class="n">root</span><span class="err">@</span><span class="n">localhost</span> <span class="n">demo1</span><span class="p">]</span><span class="err">#</span> <span class="n">cat</span> <span class="n">hello</span><span class="p">.</span><span class="n">c</span> 
-<span class="cp">#include "hello.h"</span>
-<span class="cp">#include &lt;stdio.h&gt;</span>
-<span class="cp">#include &lt;pthread.h&gt;</span>
+<div class="codehilite"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="err">@</span><span class="n">localhost</span> <span class="n">demo1</span><span class="p">]</span><span class="err">#</span> <span class="n">cat</span> <span class="n">hello</span><span class="p">.</span><span class="n">c</span> 
+<span class="cp">#include</span> <span class="cpf">"hello.h"</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;stdio.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;pthread.h&gt;</span><span class="cp"></span>
 
 <span class="kt">void</span> <span class="o">*</span><span class="n">func</span><span class="p">(</span><span class="kt">void</span> <span class="o">*</span><span class="n">arg</span><span class="p">)</span>
 <span class="p">{</span>
@@ -160,11 +160,11 @@
 <span class="p">}</span>
 </pre></div>
 <p>编译运行:</p>
-<div class="codehilite"><pre><span class="p">[</span><span class="n">root</span><span class="nv">@localhost</span> <span class="n">demo1</span><span class="p">]</span><span class="c1"># gcc -fPIC -shared hello.c -o libhello.so </span>
-<span class="p">[</span><span class="n">root</span><span class="nv">@localhost</span> <span class="n">demo1</span><span class="p">]</span><span class="c1"># go build main.go</span>
-<span class="p">[</span><span class="n">root</span><span class="nv">@localhost</span> <span class="n">demo1</span><span class="p">]</span><span class="c1"># ./main </span>
-<span class="n">hello</span><span class="p">(</span><span class="mi">18</span><span class="p">):</span> <span class="n">call</span> <span class="n">C</span> <span class="n">hello</span> <span class="n">func</span>
-<span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span>
+<div class="codehilite"><pre><span></span>[root@localhost demo1]# gcc -fPIC -shared hello.c -o libhello.so 
+[root@localhost demo1]# go build main.go
+[root@localhost demo1]# ./main 
+hello(18): call C hello func
+0 1 2 3 4 5 6 7 8 9
 </pre></div></body></html>
                 </div>
                 <div id="content-comments">
@@ -195,7 +195,7 @@
                     <div class="niu2-sidebar-label"><i class="icon-open-folder"></i>Category:</div>
                     <div class="niu2-sidebar-value"><a href="http://doumadou.github.io/category/golang.html">golang</a></div>
                     <div class="niu2-sidebar-label"><i class="icon-tag"></i>Tag:</div>
-                    <div class="niu2-sidebar-inter-value niu2-sidebar-tag"><a href="http://doumadou.github.io/tag/golang.html">Golang</a><sup>9</sup></div>
+                    <div class="niu2-sidebar-inter-value niu2-sidebar-tag"><a href="http://doumadou.github.io/tag/golang.html">Golang</a><sup>12</sup></div>
                 </div>
 
                 <div id="niu2-sidebar-toc" class="niu2-sidebar" data-status="closed">
@@ -222,7 +222,7 @@
                 </p>
                 <p>
                     ©
-                            2015
+                            2015-2016
                     <a class="niu2-footer-link" href="http://doumadou.github.io">Gavin</a>
                 </p>
                 <p class="niu2-icons">

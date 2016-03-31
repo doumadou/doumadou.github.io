@@ -60,21 +60,21 @@
                     <html><body><p>Golang没有while关键词，所有用for实现while的功能。</p>
 <p>很简单，将for二个;号两边的赋值去掉</p>
 <p>例</p>
-<div class="codehilite"><pre><span class="k">for</span> <span class="p">;;</span> <span class="p">{</span>
-<span class="p">}</span>
+<div class="codehilite"><pre><span></span>for ;; {
+}
 </pre></div>
 <p>实例如下</p>
-<div class="codehilite"><pre><span class="nb">package</span> <span class="n">main</span>
+<div class="codehilite"><pre><span></span><span class="n">package</span> <span class="n">main</span>
 
-<span class="nb">import</span> <span class="p">(</span>
-    <span class="s">"time"</span>
+<span class="kn">import</span> <span class="p">(</span>
+    <span class="s2">"time"</span>
 <span class="p">)</span>
 
 <span class="n">func</span> <span class="n">main</span><span class="p">()</span> <span class="p">{</span>
 
     <span class="k">for</span> <span class="p">;;{</span>
-        <span class="k">print</span><span class="p">(</span><span class="s">"====\n"</span><span class="p">)</span>
-        <span class="nb">time</span><span class="o">.</span><span class="n">Sleep</span><span class="p">(</span><span class="mi">1</span> <span class="o">*</span> <span class="mi">1000</span> <span class="o">*</span> <span class="mi">1000</span> <span class="o">*</span><span class="mi">1000</span><span class="p">)</span>
+        <span class="k">print</span><span class="p">(</span><span class="s2">"====</span><span class="se">\n</span><span class="s2">"</span><span class="p">)</span>
+        <span class="n">time</span><span class="o">.</span><span class="n">Sleep</span><span class="p">(</span><span class="mi">1</span> <span class="o">*</span> <span class="mi">1000</span> <span class="o">*</span> <span class="mi">1000</span> <span class="o">*</span><span class="mi">1000</span><span class="p">)</span>
     <span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
@@ -108,7 +108,7 @@
                     <div class="niu2-sidebar-label"><i class="icon-open-folder"></i>Category:</div>
                     <div class="niu2-sidebar-value"><a href="http://doumadou.github.io/category/golang.html">Golang</a></div>
                     <div class="niu2-sidebar-label"><i class="icon-tag"></i>Tag:</div>
-                    <div class="niu2-sidebar-inter-value niu2-sidebar-tag"><a href="http://doumadou.github.io/tag/golang.html">Golang</a><sup>9</sup></div>
+                    <div class="niu2-sidebar-inter-value niu2-sidebar-tag"><a href="http://doumadou.github.io/tag/golang.html">Golang</a><sup>12</sup></div>
                 </div>
 
                 <div id="niu2-sidebar-toc" class="niu2-sidebar" data-status="closed">
@@ -135,7 +135,7 @@
                 </p>
                 <p>
                     ©
-                            2015
+                            2015-2016
                     <a class="niu2-footer-link" href="http://doumadou.github.io">Gavin</a>
                 </p>
                 <p class="niu2-icons">

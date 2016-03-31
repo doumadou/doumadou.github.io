@@ -59,79 +59,79 @@
                 <div id="niu2-main-content">
                     <html><body><p>使用golang自带的rpc和http包</p>
 <h2 id="">服务端</h2>
-<div class="codehilite"><pre><span class="nb">package</span> <span class="n">main</span>
+<div class="codehilite"><pre><span></span><span class="n">package</span> <span class="n">main</span>
 
-<span class="nb">import</span> <span class="p">(</span>
-    <span class="s">"fmt"</span>
-    <span class="s">"net"</span>
-    <span class="s">"net/http"</span>
-    <span class="s">"net/rpc"</span>
+<span class="kn">import</span> <span class="p">(</span>
+    <span class="s2">"fmt"</span>
+    <span class="s2">"net"</span>
+    <span class="s2">"net/http"</span>
+    <span class="s2">"net/rpc"</span>
 <span class="p">)</span>
 
 
-<span class="n">type</span> <span class="n">Watcher</span> <span class="nb">int</span>
+<span class="nb">type</span> <span class="n">Watcher</span> <span class="nb">int</span>
 
 <span class="n">func</span> <span class="p">(</span><span class="n">w</span> <span class="o">*</span><span class="n">Watcher</span><span class="p">)</span> <span class="n">AddInfo</span><span class="p">(</span><span class="n">info</span> <span class="n">string</span><span class="p">,</span> <span class="n">result</span> <span class="o">*</span><span class="nb">int</span><span class="p">)</span> <span class="n">error</span> <span class="p">{</span>
     <span class="o">*</span><span class="n">result</span> <span class="o">=</span> <span class="mi">1</span>
-    <span class="n">fmt</span><span class="o">.</span><span class="n">Println</span><span class="p">(</span><span class="s">"Add: "</span> <span class="o">+</span> <span class="n">info</span><span class="p">)</span>
+    <span class="n">fmt</span><span class="o">.</span><span class="n">Println</span><span class="p">(</span><span class="s2">"Add: "</span> <span class="o">+</span> <span class="n">info</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">nil</span>
 <span class="p">}</span>
 
 
 <span class="n">func</span> <span class="n">main</span><span class="p">()</span> <span class="p">{</span>
 
-    <span class="n">watcher</span> <span class="p">:</span><span class="o">=</span> <span class="k">new</span><span class="p">(</span><span class="n">Watcher</span><span class="p">)</span>
+    <span class="n">watcher</span> <span class="p">:</span><span class="o">=</span> <span class="n">new</span><span class="p">(</span><span class="n">Watcher</span><span class="p">)</span>
 
     <span class="n">rpc</span><span class="o">.</span><span class="n">Register</span><span class="p">(</span><span class="n">watcher</span><span class="p">)</span>
 
     <span class="n">rpc</span><span class="o">.</span><span class="n">HandleHTTP</span><span class="p">()</span>
 
-    <span class="n">l</span><span class="p">,</span> <span class="n">err</span> <span class="p">:</span><span class="o">=</span> <span class="n">net</span><span class="o">.</span><span class="n">Listen</span><span class="p">(</span><span class="s">"tcp"</span><span class="p">,</span> <span class="s">":8080"</span><span class="p">)</span>
+    <span class="n">l</span><span class="p">,</span> <span class="n">err</span> <span class="p">:</span><span class="o">=</span> <span class="n">net</span><span class="o">.</span><span class="n">Listen</span><span class="p">(</span><span class="s2">"tcp"</span><span class="p">,</span> <span class="s2">":8080"</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">err</span> <span class="o">!=</span> <span class="n">nil</span> <span class="p">{</span>
-        <span class="n">fmt</span><span class="o">.</span><span class="n">Println</span><span class="p">(</span><span class="s">"listent tcp port failed!"</span><span class="p">)</span>
+        <span class="n">fmt</span><span class="o">.</span><span class="n">Println</span><span class="p">(</span><span class="s2">"listent tcp port failed!"</span><span class="p">)</span>
     <span class="p">}</span>
 
-    <span class="n">fmt</span><span class="o">.</span><span class="n">Println</span><span class="p">(</span><span class="s">"listening 0.0.0.0:8080"</span><span class="p">)</span>
+    <span class="n">fmt</span><span class="o">.</span><span class="n">Println</span><span class="p">(</span><span class="s2">"listening 0.0.0.0:8080"</span><span class="p">)</span>
 
     <span class="n">http</span><span class="o">.</span><span class="n">Serve</span><span class="p">(</span><span class="n">l</span><span class="p">,</span> <span class="n">nil</span><span class="p">)</span>
 <span class="p">}</span>
 </pre></div>
 <h2 id="_1">客户端</h2>
-<div class="codehilite"><pre><span class="nb">package</span> <span class="n">main</span>
+<div class="codehilite"><pre><span></span><span class="n">package</span> <span class="n">main</span>
 
 
-<span class="nb">import</span> <span class="p">(</span>
-    <span class="s">"fmt"</span>
-    <span class="s">"net/rpc"</span>
+<span class="kn">import</span> <span class="p">(</span>
+    <span class="s2">"fmt"</span>
+    <span class="s2">"net/rpc"</span>
 <span class="p">)</span>
 
 
 <span class="n">func</span> <span class="n">main</span><span class="p">()</span> <span class="p">{</span>
-    <span class="n">client</span><span class="p">,</span> <span class="n">err</span> <span class="p">:</span><span class="o">=</span> <span class="n">rpc</span><span class="o">.</span><span class="n">DialHTTP</span><span class="p">(</span><span class="s">"tcp"</span><span class="p">,</span> <span class="s">"127.0.0.1:8080"</span><span class="p">)</span>
+    <span class="n">client</span><span class="p">,</span> <span class="n">err</span> <span class="p">:</span><span class="o">=</span> <span class="n">rpc</span><span class="o">.</span><span class="n">DialHTTP</span><span class="p">(</span><span class="s2">"tcp"</span><span class="p">,</span> <span class="s2">"127.0.0.1:8080"</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">err</span> <span class="o">!=</span> <span class="n">nil</span> <span class="p">{</span>
-        <span class="n">fmt</span><span class="o">.</span><span class="n">Println</span><span class="p">(</span><span class="s">"connect rpc server failed:"</span><span class="p">,</span> <span class="n">err</span><span class="p">);</span>
+        <span class="n">fmt</span><span class="o">.</span><span class="n">Println</span><span class="p">(</span><span class="s2">"connect rpc server failed:"</span><span class="p">,</span> <span class="n">err</span><span class="p">);</span>
     <span class="p">}</span>
 
     <span class="n">var</span> <span class="n">ret</span> <span class="nb">int</span>
-    <span class="n">err</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">Call</span><span class="p">(</span><span class="s">"Watcher.AddInfo"</span><span class="p">,</span> <span class="s">"http://doumadou.github.io"</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">ret</span><span class="p">)</span>
+    <span class="n">err</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">Call</span><span class="p">(</span><span class="s2">"Watcher.AddInfo"</span><span class="p">,</span> <span class="s2">"http://doumadou.github.io"</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">ret</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">err</span> <span class="o">!=</span> <span class="n">nil</span> <span class="p">{</span>
-        <span class="n">fmt</span><span class="o">.</span><span class="n">Println</span><span class="p">(</span><span class="s">"RPC call failed"</span><span class="p">,</span> <span class="n">err</span><span class="p">)</span>
+        <span class="n">fmt</span><span class="o">.</span><span class="n">Println</span><span class="p">(</span><span class="s2">"RPC call failed"</span><span class="p">,</span> <span class="n">err</span><span class="p">)</span>
     <span class="p">}</span>
 
-    <span class="n">fmt</span><span class="o">.</span><span class="n">Println</span><span class="p">(</span><span class="s">"RPC ret value:"</span><span class="p">,</span> <span class="n">ret</span><span class="p">)</span>
+    <span class="n">fmt</span><span class="o">.</span><span class="n">Println</span><span class="p">(</span><span class="s2">"RPC ret value:"</span><span class="p">,</span> <span class="n">ret</span><span class="p">)</span>
 <span class="p">}</span>
 </pre></div>
 <p>运行结果:</p>
-<div class="codehilite"><pre><span class="p">[</span><span class="n">root</span><span class="nv">@localhost</span> <span class="n">demo_rpc</span><span class="p">]</span><span class="c1"># go run server.go </span>
-<span class="n">listening</span> <span class="mf">0.0.0.0</span><span class="p">:</span><span class="mi">8080</span>
-<span class="n">Add:</span> <span class="n">http:</span><span class="sr">//</span><span class="n">doumadou</span><span class="o">.</span><span class="n">github</span><span class="o">.</span><span class="n">io</span>
-<span class="n">Add:</span> <span class="n">http:</span><span class="sr">//</span><span class="n">doumadou</span><span class="o">.</span><span class="n">github</span><span class="o">.</span><span class="n">io</span>
+<div class="codehilite"><pre><span></span>[root@localhost demo_rpc]# go run server.go 
+listening 0.0.0.0:8080
+Add: http://doumadou.github.io
+Add: http://doumadou.github.io
 
 
-<span class="p">[</span><span class="n">root</span><span class="nv">@localhost</span> <span class="n">demo_rpc</span><span class="p">]</span><span class="c1"># go run client.go</span>
-<span class="n">RPC</span> <span class="n">ret</span> <span class="n">value:</span> <span class="mi">1</span>
-<span class="p">[</span><span class="n">root</span><span class="nv">@localhost</span> <span class="n">demo_rpc</span><span class="p">]</span><span class="c1"># go run client.go</span>
-<span class="n">RPC</span> <span class="n">ret</span> <span class="n">value:</span> <span class="mi">1</span>
+[root@localhost demo_rpc]# go run client.go
+RPC ret value: 1
+[root@localhost demo_rpc]# go run client.go
+RPC ret value: 1
 </pre></div></body></html>
                 </div>
                 <div id="content-comments">
@@ -162,7 +162,7 @@
                     <div class="niu2-sidebar-label"><i class="icon-open-folder"></i>Category:</div>
                     <div class="niu2-sidebar-value"><a href="http://doumadou.github.io/category/golang.html">golang</a></div>
                     <div class="niu2-sidebar-label"><i class="icon-tag"></i>Tag:</div>
-                    <div class="niu2-sidebar-inter-value niu2-sidebar-tag"><a href="http://doumadou.github.io/tag/golang.html">golang</a><sup>9</sup></div>
+                    <div class="niu2-sidebar-inter-value niu2-sidebar-tag"><a href="http://doumadou.github.io/tag/golang.html">golang</a><sup>12</sup></div>
                     <div class="niu2-sidebar-inter-value niu2-sidebar-tag"><a href="http://doumadou.github.io/tag/rpc.html">rpc</a><sup>1</sup></div>
                 </div>
 
@@ -190,7 +190,7 @@
                 </p>
                 <p>
                     ©
-                            2015
+                            2015-2016
                     <a class="niu2-footer-link" href="http://doumadou.github.io">Gavin</a>
                 </p>
                 <p class="niu2-icons">

@@ -58,7 +58,7 @@
             <div id="niu2-left-container" class="col-md-6 col-md-offset-2 with-right-border">
                 <div id="niu2-main-content">
                     <html><body><h2 id="">制作基础镜像</h2>
-<div class="codehilite"><pre><span class="c1"># yum install -y febootstrap</span>
+<div class="codehilite"><pre><span></span><span class="c1"># yum install -y febootstrap</span>
 <span class="c1"># febootstrap centos6.5 centos6.5_image http://vault.centos.org/6.5/os/x86_64/</span>
 <span class="c1"># 删除不需要的文件夹，减少镜像大小, 由于docker容器与宿主机共享内核，所以可以将内核模块删除。注意，别由于输入错误，而将宿主机的模块删除了。</span>
 <span class="c1"># cd centos6.5_image    </span>
@@ -67,7 +67,7 @@
 <span class="c1"># 打包，导入镜像</span>
 <span class="c1"># cd centos6.5_image &amp;&amp; tar -c .|docker import - centos6.5-base</span>
 
-<span class="p">[</span><span class="n">root</span><span class="nv">@testnode</span> <span class="n">centos6</span><span class="mf">.5_</span><span class="n">image</span><span class="p">]</span><span class="c1"># docker images</span>
+<span class="p">[</span><span class="n">root</span><span class="nd">@testnode</span> <span class="n">centos6</span><span class="o">.</span><span class="mi">5</span><span class="n">_image</span><span class="p">]</span><span class="c1"># docker images</span>
 </pre></div>
 <p>REPOSITORY          TAG                 IMAGE ID            CREATED             VIRTUAL SIZE
 centos6.5-base      latest              637778da53a4        19 minutes ago      481.2 MB</p>
@@ -78,15 +78,15 @@ centos6.5-base      latest              637778da53a4        19 minutes ago      
 <a href="https://hub.docker.com/account/signup/">注册</a></p>
 <h3 id="docker">登陆docker账号</h3>
 <p>已经登陆可以忽略</p>
-<div class="codehilite"><pre><span class="c"># docker login</span>
-<span class="c"># 根据提示输入账号信息即可</span>
+<div class="codehilite"><pre><span></span># docker login
+# 根据提示输入账号信息即可
 </pre></div>
 <h3 id="pushdocker-hub">Push镜像到docker hub</h3>
 <p>docker hub上存储镜像的格式为 <username>/<imagename>[:TAG], 所以先在本地将image的格式规范下。　使用docker tag 命令</imagename></username></p>
-<div class="codehilite"><pre><span class="c1"># docker tag centos6.5-base &lt;username&gt;/&lt;imagename&gt;</span>
-<span class="c1"># docker push &lt;username&gt;/&lt;imagename&gt;</span>
-<span class="mi">637778</span><span class="n">da53a4:</span> <span class="n">Image</span> <span class="n">successfully</span> <span class="n">pushed</span> 
-<span class="n">Pushing</span> <span class="n">tag</span> <span class="k">for</span> <span class="n">rev</span> <span class="p">[</span><span class="mi">637778</span><span class="n">da53a4</span><span class="p">]</span> <span class="n">on</span> <span class="p">{</span><span class="n">https:</span><span class="sr">//c</span><span class="n">dn</span><span class="o">-</span><span class="n">registry</span><span class="o">-</span><span class="mi">1</span><span class="o">.</span><span class="n">docker</span><span class="o">.</span><span class="n">io</span><span class="sr">/v1/</span><span class="n">repositories</span><span class="sr">/&lt;username&gt;/&lt;imagename&gt;/tags/</span><span class="n">latest</span><span class="p">}</span>
+<div class="codehilite"><pre><span></span># docker tag centos6.5-base &lt;username&gt;/&lt;imagename&gt;
+# docker push &lt;username&gt;/&lt;imagename&gt;
+637778da53a4: Image successfully pushed 
+Pushing tag for rev [637778da53a4] on {https://cdn-registry-1.docker.io/v1/repositories/&lt;username&gt;/&lt;imagename&gt;/tags/latest}
 </pre></div>
 <p>近500Ｍ的镜像一下子就上传完成了。感觉很爽啊^-^。</p></body></html>
                 </div>
@@ -118,7 +118,7 @@ centos6.5-base      latest              637778da53a4        19 minutes ago      
                     <div class="niu2-sidebar-label"><i class="icon-open-folder"></i>Category:</div>
                     <div class="niu2-sidebar-value"><a href="http://doumadou.github.io/category/docker.html">docker</a></div>
                     <div class="niu2-sidebar-label"><i class="icon-tag"></i>Tag:</div>
-                    <div class="niu2-sidebar-inter-value niu2-sidebar-tag"><a href="http://doumadou.github.io/tag/docker.html">docker</a><sup>4</sup></div>
+                    <div class="niu2-sidebar-inter-value niu2-sidebar-tag"><a href="http://doumadou.github.io/tag/docker.html">docker</a><sup>8</sup></div>
                 </div>
 
                 <div id="niu2-sidebar-toc" class="niu2-sidebar" data-status="closed">
@@ -145,7 +145,7 @@ centos6.5-base      latest              637778da53a4        19 minutes ago      
                 </p>
                 <p>
                     ©
-                            2015
+                            2015-2016
                     <a class="niu2-footer-link" href="http://doumadou.github.io">Gavin</a>
                 </p>
                 <p class="niu2-icons">

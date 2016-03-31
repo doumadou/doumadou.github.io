@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>docker动态映射窗器内部端口 - LearnLog</title>
+        <link rel="shortcut icon" type="image/x-icon" href="/favicon.png">
+        <link rel="stylesheet" href="http://doumadou.github.io/theme/css/bootstrap.min.css" type="text/css" />
+        <link rel="stylesheet" href="http://doumadou.github.io/theme/font-icons/style.min.css" type="text/css" />
+        <link rel="stylesheet" href="http://doumadou.github.io/theme/css/niu2.min.css" type="text/css" />
+        <link rel="canonical" href="http://doumadou.github.io/dockerdong-tai-ying-she-chuang-qi-nei-bu-duan-kou.html" />
+        <script type="text/javascript">window.onload=function(){};</script>
+        <!--[if lt IE 9]>
+            <script src="http://doumadou.github.io/theme/js/html5shiv.js"></script>
+            <script src="http://doumadou.github.io/theme/js/respond.min.js"></script>
+        <![endif]-->
+    </head>
+    <body> 
+        <div id="body-header">
+            <div class="navbar navbar-inverse navbar-fixed-top">
+                <div class="col-md-12">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        <a class="navbar-brand" href="http://doumadou.github.io">
+                            <i class="icon-home"></i>LearnLog
+                        </a>
+                    </div>
+                    <nav class="collapse navbar-collapse bs-navbar-collapse" role="navigation">
+                        <ul class="nav navbar-nav">
+                        <li><a href="http://doumadou.github.io/tags.html">
+                                <i class="icon-tag"></i>Tag</a>
+                        </li>
+                        <li><a href="http://doumadou.github.io/archives.html">
+                                <i class="icon-archive"></i>Archive
+                            </a>
+                        </li>
+                        <!-- category dropdown list -->
+                        <!--  self defined dropdown list -->
+                        </ul>
+                        
+                        <!-- right nav bar -->
+                        <ul class="nav navbar-nav navbar-right">
+                        <!-- google custom search -->
+                       </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+
+        <div id="body-content">
+            <div class="col-md-8 col-md-offset-2">
+                <h1 id="content-heading">docker动态映射窗器内部端口</h1>
+            </div>
+            <div id="niu2-left-container" class="col-md-6 col-md-offset-2 with-right-border">
+                <div id="niu2-main-content">
+                    <html><body><p>由docker动态映射端口引发的思考</p>
+<h2 id="iptables">使用iptables 动态映射端口</h2>
+<p>没做映射之前测试：</p>
+<p>container里开启的httpServer服务。container的IP地址为 172.17.0.12</p>
+<p>docker所在host运行wget(host并没有运行开启80端口的任何服务)</p>
+<div class="codehilite"><pre><span></span>root@vultr:~ <span class="c1"># wget 127.0.0.1</span>
+--2015-09-28 05:46:43--  http://127.0.0.1/
+Connecting to 127.0.0.1:80... failed: Connection refused.
+</pre></div>
+<p>通过container的IP地址访问服务</p>
+<div class="codehilite"><pre><span></span>root@vultr:~ <span class="c1"># wget 172.17.0.12</span>
+--2015-09-28 05:46:33--  http://172.17.0.12/
+Connecting to 172.17.0.12:80... connected.
+HTTP request sent, awaiting response... <span class="m">200</span> OK
+Length: unspecified <span class="o">[</span>text/html<span class="o">]</span>
+Saving to: ‘index.html’
+
+    <span class="o">[</span> &lt;<span class="o">=</span>&gt;                                                                                                                 <span class="o">]</span> 7,379       --.-K/s   in 0s      
+2015-09-28 05:46:33 <span class="o">(</span>62.8 MB/s<span class="o">)</span> - ‘index.html’ saved <span class="o">[</span>7379<span class="o">]</span>
+</pre></div>
+<p>使用iptables映射窗器内的80端口</p>
+<div class="codehilite"><pre><span></span><span class="c1"># /sbin/iptables -t nat -A PREROUTING -p tcp --dport 80 -j DNAT --to 172.17.0.12:80</span>
+</pre></div>
+<p>做映射之后测试：</p>
+<p>container里开启的httpServer服务。container的IP地址为 172.17.0.12</p>
+<p>docker所在host运行wget(host并没有运行开启80端口的任何服务)</p>
+<div class="codehilite"><pre><span></span>root@vultr:~ <span class="c1"># wget 127.0.0.1</span>
+<span class="o">[</span>root@testnode tmp<span class="o">]</span><span class="c1"># wget http://107.191.52.64/</span>
+--2015-09-28 14:17:33--  http://107.191.52.64/
+Connecting to 107.191.52.64:80... connected.
+HTTP request sent, awaiting response... <span class="m">200</span> OK
+Length: unspecified <span class="o">[</span>text/html<span class="o">]</span>
+Saving to: “index.html.1”
+
+    <span class="o">[</span> &lt;<span class="o">=</span>&gt;                                                                                                                 <span class="o">]</span> 7,379       --.-K/s   in 0s      
+
+2015-09-28 14:17:33 <span class="o">(</span><span class="m">281</span> MB/s<span class="o">)</span> - “index.html.1” saved <span class="o">[</span>7379<span class="o">]</span>
+</pre></div>
+<p>通过container的IP地址访问服务</p>
+<div class="codehilite"><pre><span></span>root@vultr:~ <span class="c1"># wget 172.17.0.12</span>
+--2015-09-28 05:46:33--  http://172.17.0.12/
+Connecting to 172.17.0.12:80... connected.
+HTTP request sent, awaiting response... <span class="m">200</span> OK
+Length: unspecified <span class="o">[</span>text/html<span class="o">]</span>
+Saving to: ‘index.html’
+
+    <span class="o">[</span> &lt;<span class="o">=</span>&gt;                                                                                                                 <span class="o">]</span> 7,379       --.-K/s   in 0s      
+2015-09-28 05:46:33 <span class="o">(</span>62.8 MB/s<span class="o">)</span> - ‘index.html’ saved <span class="o">[</span>7379<span class="o">]</span>
+</pre></div>
+<h2 id="iptables_1">iptables 命令详解</h2>
+<p>========================================================================================================\n</p>
+<h1 id="docker-run-d-p-8080-images">docker run -d -p 80:80 images</h1>
+<p>f0c4aee1b164872ec45c866b477cca2b249b2251a854ecded34620792d1198ec</p>
+<h1 id="wget-127001">wget 127.0.0.1</h1>
+<p>--2015-09-28 07:29:26--  http://127.0.0.1/
+Connecting to 127.0.0.1:80... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 15
+Saving to: ‘index.html’</p>
+<p>100%[====================================================================================================================&gt;] 15          --.-K/s   in 0s    <br/>
+2015-09-28 07:29:26 (3.33 MB/s) - ‘index.html’ saved [15/15]</p>
+<h1 id="netstat-npa-grep-80-w">netstat -npa |grep 80 -w</h1>
+<p>tcp6       0      0 :::80                   :::*                    LISTEN      14478/docker-proxy</p>
+<h1 id="ps-ef-grep-14478">ps -ef |grep 14478</h1>
+<p>root     14478   729  0 07:29 ?        00:00:00 docker-proxy -proto tcp -host-ip 0.0.0.0 -host-port 80 -container-ip 172.17.0.13 -container-port 80</p>
+<h1 id="kill-9-14478">kill -9 14478</h1>
+<h1 id="wget-127001_1">wget 127.0.0.1</h1>
+<p>--2015-09-28 07:41:09--  http://127.0.0.1/
+Connecting to 127.0.0.1:80... failed: Connection refused.</p>
+<p>歇菜了。。。。</p>
+<p>外网访问， 仍然OK</p>
+<h1 id="wget-http1071915264">wget http://107.191.52.64/</h1>
+<p>--2015-09-28 15:46:07--  http://107.191.52.64/
+Connecting to 107.191.52.64:80... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 15
+Saving to: “index.html”</p>
+<p>100%[====================================================================================================================&gt;] 15          --.-K/s   in 0s      </p>
+<p>2015-09-28 15:46:08 (1.79 MB/s) - “index.html” saved [15/15]</p>
+<p>再次实验保留docker-proxy,进程，清空iptables.</p>
+<p>猜想iptables并没有什么用，真正起作用的应该是docker-proxy进程。</p>
+<h1 id="docker-run-d-p-8080-contestcspherecn604569659-qq-comhttp-server">docker run -d -p 80:80 contest.csphere.cn/604569659-qq-com/http-server</h1>
+<p>ad3e33f7b38e3da54c810eaefde56cda6cc5a08024b4a32e2a7ce5b5bf365d36</p>
+<p>清空iptables里的相关规则(/sbin/iptables -t nat -D DOCKER 1)</p>
+<p>内网访问：正常</p>
+<h1 id="wget-127001_1_2">wget 127.0.0.1</h1>
+<p>--2015-09-28 07:58:13--  http://127.0.0.1/
+Connecting to 127.0.0.1:80... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 15
+Saving to: ‘index.html’</p>
+<p>100%[====================================================================================================================&gt;] 15          --.-K/s   in 0s      </p>
+<p>2015-09-28 07:58:13 (3.11 MB/s) - ‘index.html’ saved [15/15]</p>
+<p>外网访问：正常</p>
+<h1 id="wget-http1071915264_1">wget http://107.191.52.64/</h1>
+<p>--2015-09-28 16:02:17--  http://107.191.52.64/
+Connecting to 107.191.52.64:80... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 15
+Saving to: “index.html.1”</p>
+<p>100%[====================================================================================================================&gt;] 15          --.-K/s   in 0s      </p>
+<p>2015-09-28 16:02:17 (1.94 MB/s) - “index.html.1” saved [15/15]</p>
+<p>用go实现一个类似docker-proxy tcp转发功能的程序my_docker_proxy。代码见文章最后。</p>
+<p>末映射端口
+root@vultr:~# docker run -d contest.csphere.cn/604569659-qq-com/http-server
+8f80d09f4715176e6e38aa8f43f2c813954c2cdf585f941380ef1502488f814e
+root@vultr:~# wget 127.0.0.1
+--2015-09-28 09:28:19--  http://127.0.0.1/
+Connecting to 127.0.0.1:80... failed: Connection refused.
+获取contiainer IP
+root@vultr:~# docker inspect --format '{{.NetworkSettings.IPAddress}}' 8f80d09f4715176e6e38aa8f43f2c813954c2cdf585f941380ef1502488f814e
+172.17.0.15</p>
+<p>使用my_docker_proxy作动态端口映射
+root@vultr:~# ./my_docker_proxy  -host-port 80 -container-ip 172.17.0.15 -container-port 80 </p>
+<p>内网访问：OK
+root@vultr:~# wget 127.0.0.1
+--2015-09-28 09:32:34--  http://127.0.0.1/
+Connecting to 127.0.0.1:80... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 15
+Saving to: ‘index.html.1’</p>
+<p>100%[====================================================================================================================&gt;] 15          --.-K/s   in 0s      </p>
+<p>2015-09-28 09:32:34 (3.11 MB/s) - ‘index.html.1’ saved [15/15]</p>
+<p>外网访问：OK</p>
+<h1 id="wget-http1071915264_1_2">wget http://107.191.52.64/</h1>
+<p>--2015-09-28 17:35:40--  http://107.191.52.64/
+Connecting to 107.191.52.64:80... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 15
+Saving to: “index.html”</p>
+<p>100%[====================================================================================================================&gt;] 15          --.-K/s   in 0s    <br/>
+2015-09-28 17:35:40 (1.44 MB/s) - “index.html” saved [15/15]</p>
+<p>my_docker_proxy.go源代码</p>
+<div class="codehilite"><pre><span></span><span class="n">package</span> <span class="n">main</span>
+
+<span class="kn">import</span> <span class="p">(</span>
+    <span class="s2">"fmt"</span>
+    <span class="s2">"flag"</span>
+    <span class="s2">"io"</span>
+    <span class="s2">"net"</span>
+    <span class="s2">"os"</span>
+<span class="p">)</span>
+
+<span class="n">func</span> <span class="n">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">host</span> <span class="p">:</span><span class="o">=</span> <span class="n">flag</span><span class="o">.</span><span class="n">String</span><span class="p">(</span><span class="s2">"host-ip"</span><span class="p">,</span> <span class="s2">"0.0.0.0"</span><span class="p">,</span> <span class="s2">"src ip"</span><span class="p">)</span>
+    <span class="n">port</span> <span class="p">:</span><span class="o">=</span> <span class="n">flag</span><span class="o">.</span><span class="n">String</span><span class="p">(</span><span class="s2">"host-port"</span><span class="p">,</span> <span class="s2">""</span><span class="p">,</span> <span class="s2">"src port"</span><span class="p">)</span>
+    <span class="n">container_ip</span> <span class="p">:</span><span class="o">=</span> <span class="n">flag</span><span class="o">.</span><span class="n">String</span><span class="p">(</span><span class="s2">"container-ip"</span><span class="p">,</span> <span class="s2">""</span><span class="p">,</span> <span class="s2">"container ip"</span><span class="p">)</span>
+    <span class="n">container_port</span> <span class="p">:</span><span class="o">=</span> <span class="n">flag</span><span class="o">.</span><span class="n">String</span><span class="p">(</span><span class="s2">"container-port"</span><span class="p">,</span> <span class="s2">""</span><span class="p">,</span> <span class="s2">"container port"</span><span class="p">)</span>
+    <span class="n">flag</span><span class="o">.</span><span class="n">Parse</span><span class="p">()</span>
+    <span class="n">fmt</span><span class="o">.</span><span class="n">Println</span><span class="p">(</span><span class="o">*</span><span class="n">host</span><span class="p">,</span> <span class="o">*</span><span class="n">port</span><span class="p">,</span> <span class="o">*</span><span class="n">container_ip</span><span class="p">,</span> <span class="o">*</span><span class="n">container_port</span><span class="p">)</span>
+    <span class="k">if</span> <span class="o">*</span><span class="n">port</span> <span class="o">==</span> <span class="s2">""</span> <span class="o">||</span> <span class="o">*</span><span class="n">container_port</span> <span class="o">==</span> <span class="s2">""</span> <span class="o">||</span> <span class="o">*</span><span class="n">container_ip</span> <span class="o">==</span> <span class="s2">""</span> <span class="p">{</span>
+        <span class="n">fmt</span><span class="o">.</span><span class="n">Println</span><span class="p">(</span><span class="s2">"usage: [-host-ip &lt;&gt;] -host-port &lt;&gt; -container-ip &lt;&gt; -container-port &lt;&gt;"</span><span class="p">)</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">Exit</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+    <span class="p">}</span>
+    <span class="n">l</span><span class="p">,</span> <span class="n">err</span> <span class="p">:</span><span class="o">=</span> <span class="n">net</span><span class="o">.</span><span class="n">Listen</span><span class="p">(</span><span class="s2">"tcp"</span><span class="p">,</span> <span class="n">fmt</span><span class="o">.</span><span class="n">Sprintf</span><span class="p">(</span><span class="s2">"</span><span class="si">%s</span><span class="s2">:</span><span class="si">%s</span><span class="s2">"</span><span class="p">,</span> <span class="o">*</span><span class="n">host</span><span class="p">,</span> <span class="o">*</span><span class="n">port</span><span class="p">))</span>
+    <span class="k">if</span> <span class="n">err</span> <span class="o">!=</span> <span class="n">nil</span> <span class="p">{</span>
+        <span class="n">fmt</span><span class="o">.</span><span class="n">Println</span><span class="p">(</span><span class="n">err</span><span class="p">,</span> <span class="n">err</span><span class="o">.</span><span class="n">Error</span><span class="p">())</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">Exit</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+    <span class="p">}</span>
+
+    <span class="k">for</span> <span class="p">{</span>
+        <span class="n">s_conn</span><span class="p">,</span> <span class="n">err</span> <span class="p">:</span><span class="o">=</span> <span class="n">l</span><span class="o">.</span><span class="n">Accept</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">err</span> <span class="o">!=</span> <span class="n">nil</span> <span class="p">{</span>
+            <span class="k">continue</span>
+        <span class="p">}</span>
+
+        <span class="n">d_tcpAddr</span><span class="p">,</span> <span class="n">_</span> <span class="p">:</span><span class="o">=</span> <span class="n">net</span><span class="o">.</span><span class="n">ResolveTCPAddr</span><span class="p">(</span><span class="s2">"tcp4"</span><span class="p">,</span> <span class="n">fmt</span><span class="o">.</span><span class="n">Sprintf</span><span class="p">(</span><span class="s2">"</span><span class="si">%s</span><span class="s2">:</span><span class="si">%s</span><span class="s2">"</span><span class="p">,</span> <span class="o">*</span><span class="n">container_ip</span><span class="p">,</span> <span class="o">*</span><span class="n">container_port</span><span class="p">))</span>
+        <span class="n">d_conn</span><span class="p">,</span> <span class="n">err</span> <span class="p">:</span><span class="o">=</span> <span class="n">net</span><span class="o">.</span><span class="n">DialTCP</span><span class="p">(</span><span class="s2">"tcp"</span><span class="p">,</span> <span class="n">nil</span><span class="p">,</span> <span class="n">d_tcpAddr</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">err</span> <span class="o">!=</span> <span class="n">nil</span> <span class="p">{</span>
+            <span class="n">fmt</span><span class="o">.</span><span class="n">Println</span><span class="p">(</span><span class="n">err</span><span class="p">)</span>
+            <span class="n">s_conn</span><span class="o">.</span><span class="n">Write</span><span class="p">([]</span><span class="n">byte</span><span class="p">(</span><span class="n">err</span><span class="o">.</span><span class="n">Error</span><span class="p">()))</span>
+            <span class="n">s_conn</span><span class="o">.</span><span class="n">Close</span><span class="p">()</span>
+            <span class="k">continue</span>
+        <span class="p">}</span>
+        <span class="n">go</span> <span class="n">io</span><span class="o">.</span><span class="n">Copy</span><span class="p">(</span><span class="n">s_conn</span><span class="p">,</span> <span class="n">d_conn</span><span class="p">)</span>
+        <span class="n">go</span> <span class="n">io</span><span class="o">.</span><span class="n">Copy</span><span class="p">(</span><span class="n">d_conn</span><span class="p">,</span> <span class="n">s_conn</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+<p>以上代码有个问题，当httpserver不返回Content-Length时，client一直不结束.</p>
+<p>proxy与server的连接状态，一直处于close_wait状态。proxy与client的状态一直处理ESTABLISHED状态, FIN_WAIT2一段时间后会退出
+ ./my_docker_proxy -host-port 8000  -container-ip 127.0.0.1 -container-port 8001
+[root@testnode ~]# netstat -npa |grep 8001
+tcp        0      0 127.0.0.1:8001              0.0.0.0:<em>                   LISTEN      13736/python      <br/>
+tcp        0      0 127.0.0.1:8001              127.0.0.1:41384             FIN_WAIT2   -                 <br/>
+tcp        0      0 127.0.0.1:41384             127.0.0.1:8001              CLOSE_WAIT  13738/./my_docker_p 
+[root@testnode ~]# netstat -npa |grep 8000
+tcp        0      0 :::8000                     :::</em>                        LISTEN      13738/./my_docker_p 
+tcp        0      0 ::ffff:192.168.122.77:8000  ::ffff:192.168.122.1:60200  ESTABLISHED 13738/./my_docker_p</p>
+<p>梁Content-Length有值里，client退出。但是proxy的socket status 一直处理CLOSE_WAITE
+[root@testnode ~]# netstat -npa |grep 8001
+tcp        0      0 127.0.0.1:41390             127.0.0.1:8001              CLOSE_WAIT  13959/./my_docker_p 
+tcp        0      0 127.0.0.1:41389             127.0.0.1:8001              CLOSE_WAIT  13959/./my_docker_p 
+[root@testnode ~]# netstat -npa |grep 8000
+tcp        0      0 :::8000                     :::*                        LISTEN      13959/./my_docker_p 
+tcp        0      0 ::ffff:192.168.122.77:8000  ::ffff:192.168.122.1:60584  CLOSE_WAIT  13959/./my_docker_p 
+tcp        0      0 ::ffff:192.168.122.77:8000  ::ffff:192.168.122.1:60579  CLOSE_WAIT  13959/./my_docker_p </p>
+<p>CLOSE_WAIT:造成的原因，作类被被动方，收到FIN，but not send FIN to peer.</p>
+<p>有Content-Length, client close, http-server send auto close. so proxy allways beclosed peer.</p></body></html>
+                </div>
+                <div id="content-comments">
+                    <!-- 多说评论框 start -->
+                    <div class="ds-thread" data-thread-key="/dockerdong-tai-ying-she-chuang-qi-nei-bu-duan-kou.html" data-title="docker动态映射窗器内部端口" data-url="http://doumadou.github.io/dockerdong-tai-ying-she-chuang-qi-nei-bu-duan-kou.html">
+                    </div>
+                    <!-- 多说评论框 end -->
+                    <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+                    <script type="text/javascript">
+                        var duoshuoQuery = { short_name: 'doumadou' };
+                        (function() {
+                            var ds = document.createElement('script');
+                            ds.type = 'text/javascript';ds.async = true;
+                            ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+                            ds.charset = 'UTF-8';
+                            (document.getElementsByTagName('head')[0] 
+                             || document.getElementsByTagName('body')[0]).appendChild(ds);
+                        })();
+                    </script>
+                    <!-- 多说公共JS代码 end -->
+                </div>
+
+            </div>
+            <div class="niu2-right-container col-md-2">
+                <div id="niu2-sidebar-meta" class="niu2-sidebar">
+                    <div class="niu2-sidebar-label"><i class="icon-calendar"></i>Published:</div>
+                    <div class="niu2-sidebar-value">2015-09-28 13:43</div>
+                    <div class="niu2-sidebar-label"><i class="icon-open-folder"></i>Category:</div>
+                    <div class="niu2-sidebar-value"><a href="http://doumadou.github.io/category/docker.html">docker</a></div>
+                    <div class="niu2-sidebar-label"><i class="icon-tag"></i>Tag:</div>
+                    <div class="niu2-sidebar-inter-value niu2-sidebar-tag"><a href="http://doumadou.github.io/tag/iptables.html">iptables</a><sup>1</sup></div>
+                    <div class="niu2-sidebar-inter-value niu2-sidebar-tag"><a href="http://doumadou.github.io/tag/docker.html">docker</a><sup>8</sup></div>
+                </div>
+
+                <div id="niu2-sidebar-toc" class="niu2-sidebar" data-status="closed">
+                    <div class="niu2-sidebar-label">
+                        <i id="niu2-sidebar-toc-ctrl" class="icon-open-tocs"></i>TOC
+                    </div>
+                    <ul id="niu2-sidebar-toc-list">
+                        <li><a href="#content-heading">docker动态映射窗器内部端口</a></li>
+                        <li><a href='#iptables'>使用iptables 动态映射端口</a></li><li><a href='#iptables_1'>iptables 命令详解</a></li><li><a href='#docker-run-d-p-8080-images'>docker run -d -p 80:80 images</a></li><li><a href='#wget-127001'>wget 127.0.0.1</a></li><li><a href='#netstat-npa-grep-80-w'>netstat -npa |grep 80 -w</a></li><li><a href='#ps-ef-grep-14478'>ps -ef |grep 14478</a></li><li><a href='#kill-9-14478'>kill -9 14478</a></li><li><a href='#wget-127001_1'>wget 127.0.0.1</a></li><li><a href='#wget-http1071915264'>wget http://107.191.52.64/</a></li><li><a href='#docker-run-d-p-8080-contestcspherecn604569659-qq-comhttp-server'>docker run -d -p 80:80 contest.csphere.cn/604569659-qq-com/http-server</a></li><li><a href='#wget-127001_1_2'>wget 127.0.0.1</a></li><li><a href='#wget-http1071915264_1'>wget http://107.191.52.64/</a></li><li><a href='#wget-http1071915264_1_2'>wget http://107.191.52.64/</a></li>
+                        <li><a href="#content-comments">Comments</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="niu2-footer">
+            <div id="body-footer" class="col-md-6 col-md-offset-2">
+                <hr/>
+                <p>
+                    Powered by <a href="https://github.com/getpelican/pelican">Pelican</a>, 
+                    <a href="https://github.com/mawenbao/niu-x2-sidebar">theme</a> built with <a href="http://getbootstrap.com">Bootstrap3</a>
+                    by <a href="http://blog.atime.me">Ma Wenbao</a>, icons by 
+                    <a href="http://fortawesome.github.io/Font-Awesome">Font Awesome</a>.
+                </p>
+                <p>
+                    ©
+                            2015-2016
+                    <a class="niu2-footer-link" href="http://doumadou.github.io">Gavin</a>
+                </p>
+                <p class="niu2-icons">
+                </p>
+            </div>
+        </div>
+
+        <div id="niu2-pygments" data-theme="github"></div>
+        <script type="text/javascript" src="http://doumadou.github.io/theme/js/jquery-1.11.0.min.js"></script>
+        <script type="text/javascript" src="http://doumadou.github.io/theme/js/niu2.min.js"></script>
+        <script type="text/javascript" src="http://doumadou.github.io/theme/js/bootstrap.min.js"></script>
+        <script type="text/javascript">
+            onContentLoaded();
+        </script>
+    </body>
+</html>

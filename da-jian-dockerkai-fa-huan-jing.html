@@ -58,19 +58,64 @@
             <div id="niu2-left-container" class="col-md-6 col-md-offset-2 with-right-border">
                 <div id="niu2-main-content">
                     <html><body><h2 id="">安装依赖</h2>
-<div class="codehilite"><pre><span class="n">yum</span> <span class="n">install</span> <span class="o">-</span><span class="n">y</span> <span class="n">git</span> <span class="n">hg</span> <span class="n">golang</span>
+<div class="codehilite"><pre><span></span>yum install -y git hg golang sqlite-devel device-mapper-devel btrfs-progs-devel
 </pre></div>
 <h2 id="docker">下载docker源码</h2>
-<div class="codehilite"><pre><span class="n">export</span> <span class="n">GOPATH</span><span class="o">=</span><span class="sr">/usr/</span><span class="n">lib</span><span class="o">/</span><span class="n">golang</span>
-<span class="n">go</span> <span class="n">get</span> <span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="sr">/docker/</span><span class="n">docker</span>
-<span class="n">cd</span> <span class="sr">/usr/</span><span class="n">lib</span><span class="sr">/golang/s</span><span class="n">rc</span><span class="sr">/github.com/</span><span class="n">docker</span><span class="o">/</span><span class="n">docker</span>
-
-
-<span class="c1"># cd /usr/lib/golang/src/code.google.com/p/go.net; hg pull</span>
+<div class="codehilite"><pre><span></span>export GOPATH=/usr/lib/golang
+go get github.com/docker/docker
 </pre></div>
-<p>abort: code.google.com certificate error: certificate is for <em>.googlecode.com, </em>.cloud.google.com, <em>.code.google.com, </em>.codespot.com, <em>.developers.google.com, </em>.gcr.io, <em>.googlesource.com, </em>.u.googlecode.com, gcr.io, googlecode.com, googlesource.com
+<h2 id="_1">本地编译</h2>
+<div class="codehilite"><pre><span></span>cd /usr/lib/golang/src/github.com/docker/docker
+</pre></div>
+<div class="codehilite"><pre><span></span><span class="x">[root@localhost docker]</span><span class="err">#</span><span class="x"> ./hack/make.sh binary</span>
+<span class="err">#</span><span class="x"> WARNING! I don't seem to be running in the Docker container.</span>
+<span class="err">#</span><span class="x"> The result of this command might be an incorrect build, and will not be</span>
+<span class="err">#</span><span class="x">   officially supported.</span>
+<span class="err">#</span><span class="x"></span>
+<span class="err">#</span><span class="x"> Try this instead: make all</span>
+<span class="err">#</span><span class="x"></span>
+
+<span class="x">bundles/1.5.0 already exists. Removing.</span>
+
+<span class="x">---&gt; Making bundle: binary (in bundles/1.5.0/binary)</span>
+<span class="x">daemon/execdriver/native/driver.go:26:2: cannot find package "github.com/docker/libcontainer/console" in any of:</span>
+<span class="x">    /usr/lib/golang/src/github.com/docker/libcontainer/console (from </span><span class="p">$</span><span class="nv">GOROOT</span><span class="x">)</span>
+<span class="x">    /usr/lib/golang/src/github.com/docker/libcontainer/console (from </span><span class="p">$</span><span class="nv">GOPATH</span><span class="x">)</span>
+<span class="x">daemon/execdriver/native/create.go:16:2: cannot find package "github.com/docker/libcontainer/mount" in any of:</span>
+<span class="x">    /usr/lib/golang/src/github.com/docker/libcontainer/mount (from </span><span class="p">$</span><span class="nv">GOROOT</span><span class="x">)</span>
+<span class="x">    /usr/lib/golang/src/github.com/docker/libcontainer/mount (from </span><span class="p">$</span><span class="nv">GOPATH</span><span class="x">)</span>
+<span class="x">daemon/execdriver/lxc/driver.go:25:2: cannot find package "github.com/docker/libcontainer/mount/nodes" in any of:</span>
+<span class="x">    /usr/lib/golang/src/github.com/docker/libcontainer/mount/nodes (from </span><span class="p">$</span><span class="nv">GOROOT</span><span class="x">)</span>
+<span class="x">    /usr/lib/golang/src/github.com/docker/libcontainer/mount/nodes (from </span><span class="p">$</span><span class="nv">GOPATH</span><span class="x">)</span>
+<span class="x">daemon/execdriver/lxc/lxc_init_linux.go:7:2: cannot find package "github.com/docker/libcontainer/namespaces" in any of:</span>
+<span class="x">    /usr/lib/golang/src/github.com/docker/libcontainer/namespaces (from </span><span class="p">$</span><span class="nv">GOROOT</span><span class="x">)</span>
+<span class="x">    /usr/lib/golang/src/github.com/docker/libcontainer/namespaces (from </span><span class="p">$</span><span class="nv">GOPATH</span><span class="x">)</span>
+<span class="x">daemon/execdriver/native/driver.go:28:2: cannot find package "github.com/docker/libcontainer/namespaces/nsenter" in any of:</span>
+<span class="x">    /usr/lib/golang/src/github.com/docker/libcontainer/namespaces/nsenter (from </span><span class="p">$</span><span class="nv">GOROOT</span><span class="x">)</span>
+<span class="x">    /usr/lib/golang/src/github.com/docker/libcontainer/namespaces/nsenter (from </span><span class="p">$</span><span class="nv">GOPATH</span><span class="x">)</span>
+<span class="x">daemon/execdriver/utils.go:8:2: cannot find package "github.com/docker/libcontainer/security/capabilities" in any of:</span>
+<span class="x">    /usr/lib/golang/src/github.com/docker/libcontainer/security/capabilities (from </span><span class="p">$</span><span class="nv">GOROOT</span><span class="x">)</span>
+<span class="x">    /usr/lib/golang/src/github.com/docker/libcontainer/security/capabilities (from </span><span class="p">$</span><span class="nv">GOPATH</span><span class="x">)</span>
+</pre></div>
+<p>提示缺少包，就使用go get 去下载</p>
+<div class="codehilite"><pre><span></span>[root@localhost docker]# go get code.google.com/p/go.net/websocket
+//下面是上面的命令执行输出
+# cd /usr/lib/golang/src/code.google.com/p/go.net; hg pull
+abort: code.google.com certificate error: certificate is for *.googlecode.com, *.cloud.google.com, *.code.google.com, *.codespot.com, *.developers.google.com, *.gcr.io, *.googlesource.com, *.u.googlecode.com, gcr.io, googlecode.com, googlesource.com
 (configure hostfingerprint 64:02:da:c9:d5:dc:cb:a8:87:13:4c:a4:6f:ee:e7:dc:fc:c1:8a:42 or use --insecure to connect insecurely)
-package code.google.com/p/go.net/websocket: exit status 255</p></body></html>
+package code.google.com/p/go.net/websocket: exit status 255
+</pre></div>
+<p>若出现以上错误提示，可以手动使用hg去下载代码，　也可以直接修改hg的配置文件（该方法最方便）</p>
+<p>方法一: 手动使用hg去下载, 并加上--insecure参数, 例:</p>
+<div class="codehilite"><pre><span></span>    hg clone --insecure -U https://code.google.com/p/go.net /usr/lib/golang/src/code.google.com/p/go.net
+</pre></div>
+<p>方法二: 修改hg的配置文件。该方法最好，无需手动下载</p>
+<p>注释掉certs.rc中的cacerts项</p>
+<div class="codehilite"><pre><span></span><span class="o">[</span>root@localhost docker<span class="o">]</span><span class="c1"># cat /etc/mercurial/hgrc.d/certs.rc</span>
+<span class="c1"># see: http://mercurial.selenic.com/wiki/CACertificates</span>
+<span class="c1">#[web]</span>
+<span class="c1">#cacerts = /etc/pki/tls/certs/ca-bundle.crt</span>
+</pre></div></body></html>
                 </div>
                 <div id="content-comments">
                     <!-- 多说评论框 start -->
@@ -100,7 +145,7 @@ package code.google.com/p/go.net/websocket: exit status 255</p></body></html>
                     <div class="niu2-sidebar-label"><i class="icon-open-folder"></i>Category:</div>
                     <div class="niu2-sidebar-value"><a href="http://doumadou.github.io/category/docker.html">docker</a></div>
                     <div class="niu2-sidebar-label"><i class="icon-tag"></i>Tag:</div>
-                    <div class="niu2-sidebar-inter-value niu2-sidebar-tag"><a href="http://doumadou.github.io/tag/docker.html">docker</a><sup>5</sup></div>
+                    <div class="niu2-sidebar-inter-value niu2-sidebar-tag"><a href="http://doumadou.github.io/tag/docker.html">docker</a><sup>8</sup></div>
                 </div>
 
                 <div id="niu2-sidebar-toc" class="niu2-sidebar" data-status="closed">
@@ -109,7 +154,7 @@ package code.google.com/p/go.net/websocket: exit status 255</p></body></html>
                     </div>
                     <ul id="niu2-sidebar-toc-list">
                         <li><a href="#content-heading">搭建docker开发环境</a></li>
-                        <li><a href='#'>安装依赖</a></li><li><a href='#docker'>下载docker源码</a></li>
+                        <li><a href='#'>安装依赖</a></li><li><a href='#docker'>下载docker源码</a></li><li><a href='#_1'>本地编译</a></li>
                         <li><a href="#content-comments">Comments</a></li>
                     </ul>
                 </div>
@@ -127,7 +172,7 @@ package code.google.com/p/go.net/websocket: exit status 255</p></body></html>
                 </p>
                 <p>
                     ©
-                            2015
+                            2015-2016
                     <a class="niu2-footer-link" href="http://doumadou.github.io">Gavin</a>
                 </p>
                 <p class="niu2-icons">

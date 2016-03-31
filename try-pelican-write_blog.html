@@ -60,42 +60,43 @@
                     <html><body><h2 id="">环境</h2>
 <p>ubuntu 12.04</p>
 <h2 id="pelican">安装pelican, 及依赖</h2>
-<div class="codehilite"><pre><span class="c"># pip install pelican</span>
-<span class="c"># pip install markdown</span>
+<div class="codehilite"><pre><span></span># apt-get install python-pip
+# pip install pelican
+# pip install markdown
 </pre></div>
 <h2 id="blog">快速建立一个Blog</h2>
-<div class="codehilite"><pre><span class="nv">$</span> <span class="nv">mkdir</span> <span class="n">blog</span>
-<span class="nv">$</span> <span class="nv">cd</span> <span class="n">blog</span>
-<span class="nv">$</span> <span class="nv">pelican</span><span class="o">-</span><span class="n">quickstart</span>
+<div class="codehilite"><pre><span></span>$ mkdir blog
+$ <span class="nb">cd</span> blog
+$ pelican-quickstart
 </pre></div>
 <h2 id="_1">写一篇文章</h2>
-<div class="codehilite"><pre><span class="err">文章保存路径</span> <span class="n">content</span><span class="err">目录下</span>
-<span class="err">例如</span><span class="n">hello</span><span class="o">.</span><span class="n">md</span>
+<div class="codehilite"><pre><span></span>文章保存路径 content目录下
+例如hello.md
 
-<span class="nv">$</span> <span class="nv">vim</span> <span class="n">content</span><span class="o">/</span><span class="n">hello</span><span class="o">.</span><span class="n">md</span>
+$ vim content/hello.md
 </pre></div>
 <p>内容如下</p>
-<div class="codehilite"><pre><span class="err">Title:</span> <span class="err">Use</span> <span class="err">Pelican</span> <span class="err">write</span> <span class="err">blog</span>
-<span class="err">Date:</span> <span class="err">2015-07-14</span> <span class="err">15:49</span>
-<span class="err">Category:</span> <span class="err">Python</span>
-<span class="err">Tags:</span> <span class="err">pelican,</span> <span class="err">publishing</span>
-<span class="err">Slug:</span> <span class="err">try-pelican-write_blog</span>
-<span class="err">Author:</span> <span class="err">Gavin</span>
-<span class="err">Summary:</span> <span class="err">try</span> <span class="err">pelican</span> <span class="err">write</span> <span class="err">blog</span>
+<div class="codehilite"><pre><span></span><span class="n">Title</span><span class="o">:</span> <span class="n">Use</span> <span class="n">Pelican</span> <span class="n">write</span> <span class="n">blog</span>
+<span class="n">Date</span><span class="o">:</span> <span class="mi">2015</span><span class="o">-</span><span class="mi">07</span><span class="o">-</span><span class="mi">14</span> <span class="mi">15</span><span class="o">:</span><span class="mi">49</span>
+<span class="n">Category</span><span class="o">:</span> <span class="n">Python</span>
+<span class="n">Tags</span><span class="o">:</span> <span class="n">pelican</span><span class="o">,</span> <span class="n">publishing</span>
+<span class="n">Slug</span><span class="o">:</span> <span class="k">try</span><span class="o">-</span><span class="n">pelican</span><span class="o">-</span><span class="n">write_blog</span>
+<span class="n">Author</span><span class="o">:</span> <span class="n">Gavin</span>
+<span class="n">Summary</span><span class="o">:</span> <span class="k">try</span> <span class="n">pelican</span> <span class="n">write</span> <span class="n">blog</span>
 
 
-<span class="err">0.</span> <span class="err">环境</span>
-   <span class="err">ubuntu</span> <span class="err">12.04</span>
+<span class="mi">0</span><span class="o">.</span> <span class="err">环境</span>
+   <span class="n">ubuntu</span> <span class="mf">12.04</span>
 
-<span class="err">1.</span> <span class="err">安装pelican,</span> <span class="err">及依赖</span>
+<span class="mi">1</span><span class="o">.</span> <span class="err">安装</span><span class="n">pelican</span><span class="o">,</span> <span class="err">及依赖</span>
 </pre></div>
 <h2 id="html">生成html文件</h2>
-<div class="codehilite"><pre><span class="nv">$</span> <span class="nv">make</span> <span class="n">html</span>
+<div class="codehilite"><pre><span></span>$ make html
 </pre></div>
 <p>Done: Processed 1 article, 0 drafts, 0 pages and 0 hidden pages in 0.37 seconds.
 说明html生成成功</p>
 <h2 id="http-http1270018000-blog">启动http服务打开 http://127.0.0.1:8000 即可看到blog站点</h2>
-<div class="codehilite"><pre><span class="nv">$</span> <span class="nv">make</span> <span class="n">devserver</span>
+<div class="codehilite"><pre><span></span>$ make devserver
 </pre></div>
 <p>Done: Processed 1 article, 0 drafts, 0 pages and 0 hidden pages in 0.17 seconds.
 Pelican and HTTP server processes now running in background.
@@ -103,7 +104,7 @@ Pelican and HTTP server processes now running in background.
 <h2 id="_1_2">注意事项</h2>
 <p>make html提示没有文件生成. 可能是没有安装markdown. 可以使用make html DEBUG=1看看哪里出问题了</p>
 <p>参考文件: markdown语法</p>
-<div class="codehilite"><pre><span class="n">http:</span><span class="sr">//</span><span class="n">www</span><span class="o">.</span><span class="n">appinn</span><span class="o">.</span><span class="n">com</span><span class="sr">/markdown/</span>
+<div class="codehilite"><pre><span></span>http://www.appinn.com/markdown/
 </pre></div></body></html>
                 </div>
                 <div id="content-comments">
@@ -162,7 +163,7 @@ Pelican and HTTP server processes now running in background.
                 </p>
                 <p>
                     ©
-                            2015
+                            2015-2016
                     <a class="niu2-footer-link" href="http://doumadou.github.io">Gavin</a>
                 </p>
                 <p class="niu2-icons">

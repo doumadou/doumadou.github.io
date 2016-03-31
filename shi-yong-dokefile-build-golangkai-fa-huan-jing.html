@@ -59,10 +59,10 @@
                 <div id="niu2-main-content">
                     <html><body><p>基础镜像 doumadou/centos6.5_x86_64-base:latest</p>
 <p>Dockerfile:</p>
-<div class="codehilite"><pre>    <span class="n">FROM</span> <span class="n">doumadou</span><span class="o">/</span><span class="n">centos6</span><span class="mf">.5_</span><span class="n">x86_64</span><span class="o">-</span><span class="n">base:latest</span>
-    <span class="n">MAINTAINER</span> <span class="n">Gavin</span> <span class="n">Tao</span> <span class="s">"gavin.tao17@gmail.com"</span>
+<div class="codehilite"><pre><span></span>    FROM doumadou/centos6.5_x86_64-base:latest
+    MAINTAINER Gavin Tao "gavin.tao17@gmail.com"
 
-    <span class="n">RUN</span> <span class="n">cd</span> <span class="sr">/tmp  &amp;&amp; rpm -ivh http://dl.Fedoraproject.org/</span><span class="n">pub</span><span class="sr">/epel/</span><span class="mi">6</span><span class="sr">/x86_64/</span><span class="n">epel</span><span class="o">-</span><span class="n">release</span><span class="o">-</span><span class="mi">6</span><span class="o">-</span><span class="mi">8</span><span class="o">.</span><span class="n">noarch</span><span class="o">.</span><span class="n">rpm</span> <span class="o">&amp;&amp;</span> <span class="n">yum</span> <span class="o">-</span><span class="n">y</span> <span class="n">install</span> <span class="n">golang</span> <span class="o">&amp;&amp;</span> <span class="n">rm</span> <span class="sr">/tmp/</span><span class="o">*</span> <span class="o">-</span><span class="n">rfv</span>
+    RUN cd /tmp  &amp;&amp; rpm -ivh http://dl.Fedoraproject.org/pub/epel/6/x86_64/epel-release-6-8.noarch.rpm &amp;&amp; yum -y install golang &amp;&amp; rm /tmp/* -rfv
 </pre></div>
 <p>生成的存储在Dockerfile的名称 doumadou/centos6.5_x86_64_golang_dev:latest</p></body></html>
                 </div>
@@ -94,8 +94,8 @@
                     <div class="niu2-sidebar-label"><i class="icon-open-folder"></i>Category:</div>
                     <div class="niu2-sidebar-value"><a href="http://doumadou.github.io/category/golang.html">golang</a></div>
                     <div class="niu2-sidebar-label"><i class="icon-tag"></i>Tag:</div>
-                    <div class="niu2-sidebar-inter-value niu2-sidebar-tag"><a href="http://doumadou.github.io/tag/golang.html">golang</a><sup>9</sup></div>
-                    <div class="niu2-sidebar-inter-value niu2-sidebar-tag"><a href="http://doumadou.github.io/tag/docker.html">Docker</a><sup>4</sup></div>
+                    <div class="niu2-sidebar-inter-value niu2-sidebar-tag"><a href="http://doumadou.github.io/tag/golang.html">golang</a><sup>12</sup></div>
+                    <div class="niu2-sidebar-inter-value niu2-sidebar-tag"><a href="http://doumadou.github.io/tag/docker.html">Docker</a><sup>8</sup></div>
                 </div>
 
                 <div id="niu2-sidebar-toc" class="niu2-sidebar" data-status="closed">
@@ -122,7 +122,7 @@
                 </p>
                 <p>
                     ©
-                            2015
+                            2015-2016
                     <a class="niu2-footer-link" href="http://doumadou.github.io">Gavin</a>
                 </p>
                 <p class="niu2-icons">

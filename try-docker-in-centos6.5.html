@@ -58,36 +58,36 @@
             <div id="niu2-left-container" class="col-md-6 col-md-offset-2 with-right-border">
                 <div id="niu2-main-content">
                     <html><body><h2 id="kerenl">升级kerenl</h2>
-<div class="codehilite"><pre><span class="c1"># rpm --import https://www.elrepo.org/RPM-GPG-KEY-elrepo.org</span>
+<div class="codehilite"><pre><span></span><span class="c1"># rpm --import https://www.elrepo.org/RPM-GPG-KEY-elrepo.org</span>
 <span class="c1"># rpm -Uvh http://www.elrepo.org/elrepo-release-6-6.el6.elrepo.noarch.rpm</span>
 <span class="c1"># yum --enablerepo=elrepo-kernel -y install kernel-lt</span>
-<span class="err">修改</span><span class="sr">/etc/g</span><span class="n">rub</span><span class="o">.</span><span class="n">conf</span>
+<span class="err">修改</span><span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">grub</span><span class="o">.</span><span class="n">conf</span>
 <span class="c1"># reboot</span>
-<span class="p">[</span><span class="n">root</span><span class="nv">@testnode</span> <span class="o">~</span><span class="p">]</span><span class="c1"># uname -r</span>
-<span class="mf">3.10.82</span><span class="o">-</span><span class="mi">1</span><span class="o">.</span><span class="n">el6</span><span class="o">.</span><span class="n">elrepo</span><span class="o">.</span><span class="n">x86_64</span>
+<span class="p">[</span><span class="n">root</span><span class="nd">@testnode</span> <span class="o">~</span><span class="p">]</span><span class="c1"># uname -r</span>
+<span class="mf">3.10</span><span class="o">.</span><span class="mi">82</span><span class="o">-</span><span class="mf">1.</span><span class="n">el6</span><span class="o">.</span><span class="n">elrepo</span><span class="o">.</span><span class="n">x86_64</span>
 </pre></div>
 <h2 id="docker-docker-version-150-build-a8a31ef150">安装docker( Docker version 1.5.0, build a8a31ef/1.5.0)</h2>
 <h3 id="selinuxlxc">取消selinux，因为它会干扰lxc的正常功能</h3>
-<div class="codehilite"><pre><span class="nv">$</span> <span class="nv">sudo</span> <span class="n">vim</span> <span class="sr">/etc/s</span><span class="n">elinux</span><span class="o">/</span><span class="n">config</span>
-<span class="n">SELINUX</span><span class="o">=</span><span class="n">disabled</span>
-<span class="n">SELINUXTYPE</span><span class="o">=</span><span class="n">targeted</span>
+<div class="codehilite"><pre><span></span>$ sudo vim /etc/selinux/config
+<span class="nv">SELINUX</span><span class="o">=</span>disabled
+<span class="nv">SELINUXTYPE</span><span class="o">=</span>targeted
 </pre></div>
 <h3 id="fedora-epel">安装 Fedora EPEL</h3>
-<div class="codehilite"><pre><span class="nv">$</span> <span class="nv">sudo</span> <span class="n">yum</span> <span class="o">-</span><span class="n">y</span> <span class="n">install</span> <span class="n">http:</span><span class="sr">//</span><span class="n">ftp</span><span class="o">.</span><span class="n">riken</span><span class="o">.</span><span class="n">jp</span><span class="sr">/Linux/</span><span class="n">fedora</span><span class="sr">/epel/</span><span class="mi">6</span><span class="sr">/x86_64/</span><span class="n">epel</span><span class="o">-</span><span class="n">release</span><span class="o">-</span><span class="mi">6</span><span class="o">-</span><span class="mi">8</span><span class="o">.</span><span class="n">noarch</span><span class="o">.</span><span class="n">rpm</span>
+<div class="codehilite"><pre><span></span>$ sudo yum -y install http://ftp.riken.jp/Linux/fedora/epel/6/x86_64/epel-release-6-8.noarch.rpm
 </pre></div>
 <h3 id="hop5-repo">添加 hop5 repo地址</h3>
-<div class="codehilite"><pre><span class="nv">$</span> <span class="nv">cd</span> <span class="sr">/etc/</span><span class="n">yum</span><span class="o">.</span><span class="n">repos</span><span class="o">.</span><span class="n">d</span>
-<span class="nv">$</span> <span class="nv">sudo</span> <span class="n">wget</span> <span class="n">http:</span><span class="sr">//</span><span class="n">www</span><span class="o">.</span><span class="n">hop5</span><span class="o">.</span><span class="n">in</span><span class="sr">/yum/</span><span class="n">el6</span><span class="o">/</span><span class="n">hop5</span><span class="o">.</span><span class="n">repo</span>
+<div class="codehilite"><pre><span></span>$ <span class="nb">cd</span> /etc/yum.repos.d
+$ sudo wget http://www.hop5.in/yum/el6/hop5.repo
 </pre></div>
 <h3 id="docker-io">安装 docker-io</h3>
-<div class="codehilite"><pre><span class="c"># sudo yum -y install docker-io</span>
+<div class="codehilite"><pre><span></span># sudo yum -y install docker-io
 </pre></div>
 <p>会自动安装带aufs模块的3.10内核，以及docker-io包。</p>
-<div class="codehilite"><pre><span class="c"># yum install -y device-mapper-libs</span>
-<span class="c"># docker images</span>
+<div class="codehilite"><pre><span></span># yum install -y device-mapper-libs
+# docker images
 </pre></div>
 <h2 id="centos-65">制作镜像 centos 6.5</h2>
-<div class="codehilite"><pre><span class="c1"># yum install -y febootstrap</span>
+<div class="codehilite"><pre><span></span><span class="c1"># yum install -y febootstrap</span>
 
 <span class="n">mount</span> <span class="n">iso</span>
 
@@ -103,43 +103,43 @@
 
 <span class="c1"># cd centos6.5_image &amp;&amp; tar -c .|docker import - centos6.5-base</span>
 
-<span class="p">[</span><span class="n">root</span><span class="nv">@testnode</span> <span class="n">centos6</span><span class="mf">.5_</span><span class="n">image</span><span class="p">]</span><span class="c1"># docker images</span>
+<span class="p">[</span><span class="n">root</span><span class="nd">@testnode</span> <span class="n">centos6</span><span class="o">.</span><span class="mi">5</span><span class="n">_image</span><span class="p">]</span><span class="c1"># docker images</span>
 <span class="n">REPOSITORY</span>          <span class="n">TAG</span>                 <span class="n">IMAGE</span> <span class="n">ID</span>            <span class="n">CREATED</span>             <span class="n">VIRTUAL</span> <span class="n">SIZE</span>
-<span class="n">centos6</span><span class="mf">.5</span><span class="o">-</span><span class="n">base</span>      <span class="n">latest</span>              <span class="mi">637778</span><span class="n">da53a4</span>        <span class="mi">19</span> <span class="n">minutes</span> <span class="n">ago</span>      <span class="mf">481.2</span> <span class="n">MB</span>
+<span class="n">centos6</span><span class="o">.</span><span class="mi">5</span><span class="o">-</span><span class="n">base</span>      <span class="n">latest</span>              <span class="mi">637778</span><span class="n">da53a4</span>        <span class="mi">19</span> <span class="n">minutes</span> <span class="n">ago</span>      <span class="mf">481.2</span> <span class="n">MB</span>
 </pre></div>
 <h2 id="">启动容器</h2>
-<div class="codehilite"><pre><span class="c">#  docker run -ti centos6.5-base:latest /bin/bash</span>
+<div class="codehilite"><pre><span></span>#  docker run -ti centos6.5-base:latest /bin/bash
 </pre></div>
 <h2 id="contianer-pid-ip">获取contianer pid ip</h2>
-<div class="codehilite"><pre><span class="c"># docker inspect -f "{{.State.Pid}}" &lt;container name&gt;</span>
-<span class="c"># docker inspect -f "{{.NetworkSettings.IPAddress}}" &lt;container name&gt;</span>
+<div class="codehilite"><pre><span></span><span class="x"># docker inspect -f "</span><span class="cp">{{</span><span class="nv">.State.Pid</span><span class="cp">}}</span><span class="x">" &lt;container name&gt;</span>
+<span class="x"># docker inspect -f "</span><span class="cp">{{</span><span class="nv">.NetworkSettings.IPAddress</span><span class="cp">}}</span><span class="x">" &lt;container name&gt;</span>
 </pre></div>
 <h2 id="api">API:</h2>
-<div class="codehilite"><pre><span class="c1"># nc -U /var/run/docker.sock</span>
-<span class="n">GET</span> <span class="sr">/images/</span><span class="n">json</span> <span class="n">HTTP</span><span class="o">/</span><span class="mf">1.1</span> <span class="c1">## 二个回车</span>
+<div class="codehilite"><pre><span></span># nc -U /var/run/docker.sock
+GET /images/json HTTP/1.1 ## 二个回车
 
-<span class="n">HTTP</span><span class="o">/</span><span class="mf">1.1</span> <span class="mi">200</span> <span class="n">OK</span>
-<span class="n">Content</span><span class="o">-</span><span class="n">Type:</span> <span class="n">application</span><span class="o">/</span><span class="n">json</span>
-<span class="n">Date:</span> <span class="n">Sun</span><span class="p">,</span> <span class="mi">12</span> <span class="n">Jul</span> <span class="mi">2015</span> <span class="mi">19</span><span class="p">:</span><span class="mi">35</span><span class="p">:</span><span class="mi">33</span> <span class="n">GMT</span>
-<span class="n">Content</span><span class="o">-</span><span class="n">Length:</span> <span class="mi">1009</span>
+HTTP/1.1 200 OK
+Content-Type: application/json
+Date: Sun, 12 Jul 2015 19:35:33 GMT
+Content-Length: 1009
 
-<span class="p">[{</span><span class="s">"Created"</span><span class="p">:</span><span class="mi">1436470114</span><span class="p">,</span><span class="s">"Id"</span><span class="p">:</span><span class="s">"d2a0ecffe6fa4ef3de9646a75cc629bbd9da7eead7f767cb810f9808d6b3ecb6"</span><span class="p">,</span><span class="s">"ParentId"</span><span class="p">:</span><span class="s">"29460ac934423a55802fcad24856827050697b4a9f33550bd93c82762fb6db8f"</span><span class="p">,</span><span class="s">"RepoTags"</span><span class="p">:[</span><span class="s">"ubuntu:14.04"</span><span class="p">,</span><span class="s">"ubuntu:14.04.2"</span><span class="p">,</span><span class="s">"ubuntu:latest"</span><span class="p">,</span><span class="s">"ubuntu:trusty-20150630"</span><span class="p">,</span><span class="s">"ubuntu:trusty"</span><span class="p">],</span><span class="s">"Size"</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="s">"VirtualSize"</span><span class="p">:</span><span class="mi">188331689</span><span class="p">}</span>
-<span class="p">,{</span><span class="s">"Created"</span><span class="p">:</span><span class="mi">1436391846</span><span class="p">,</span><span class="s">"Id"</span><span class="p">:</span><span class="s">"019c313e5671f01d0deecbb698636d41c7a06af5f5895802939bc63b367a0bb8"</span><span class="p">,</span><span class="s">"ParentId"</span><span class="p">:</span><span class="s">"5ae2785c4ebfd7fff024e99808012f65b160343f59bfbdd1661791fcfc08ec51"</span><span class="p">,</span><span class="s">"RepoTags"</span><span class="p">:[</span><span class="s">"nginx_1.8.0_php_fpm_5.3.3:v0.1"</span><span class="p">],</span><span class="s">"Size"</span><span class="p">:</span><span class="mi">70797331</span><span class="p">,</span><span class="s">"VirtualSize"</span><span class="p">:</span><span class="mi">552001511</span><span class="p">}</span>
-<span class="p">,{</span><span class="s">"Created"</span><span class="p">:</span><span class="mi">1435787783</span><span class="p">,</span><span class="s">"Id"</span><span class="p">:</span><span class="s">"df74ad94ecc79bdda55062cfbdb0ebcb90bb6c207b4498a3dcc5f92a0b4dd971"</span><span class="p">,</span><span class="s">"ParentId"</span><span class="p">:</span><span class="s">"2f0fa17ce0b8ac98107cc3bc66436103ee6aec323f9a27f8e67634d602918c58"</span><span class="p">,</span><span class="s">"RepoTags"</span><span class="p">:[</span><span class="s">"mysql_server_5.1.73-5:latest"</span><span class="p">],</span><span class="s">"Size"</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="s">"VirtualSize"</span><span class="p">:</span><span class="mi">639244242</span><span class="p">}</span>
-<span class="p">,{</span><span class="s">"Created"</span><span class="p">:</span><span class="mi">1435710271</span><span class="p">,</span><span class="s">"Id"</span><span class="p">:</span><span class="s">"637778da53a417bb6c64b029d59382bfc8fb8381943d89377ad312bb9abbbc75"</span><span class="p">,</span><span class="s">"ParentId"</span><span class="p">:</span><span class="s">""</span><span class="p">,</span><span class="s">"RepoTags"</span><span class="p">:[</span><span class="s">"centos6.5-base:latest"</span><span class="p">],</span><span class="s">"Size"</span><span class="p">:</span><span class="mi">481204071</span><span class="p">,</span><span class="s">"VirtualSize"</span><span class="p">:</span><span class="mi">481204071</span><span class="p">}</span>
-<span class="p">]</span>
-<span class="n">HTTP</span><span class="o">/</span><span class="mf">1.1</span> <span class="mi">400</span> <span class="n">Bad</span> <span class="n">Request</span>
+[{"Created":1436470114,"Id":"d2a0ecffe6fa4ef3de9646a75cc629bbd9da7eead7f767cb810f9808d6b3ecb6","ParentId":"29460ac934423a55802fcad24856827050697b4a9f33550bd93c82762fb6db8f","RepoTags":["ubuntu:14.04","ubuntu:14.04.2","ubuntu:latest","ubuntu:trusty-20150630","ubuntu:trusty"],"Size":0,"VirtualSize":188331689}
+,{"Created":1436391846,"Id":"019c313e5671f01d0deecbb698636d41c7a06af5f5895802939bc63b367a0bb8","ParentId":"5ae2785c4ebfd7fff024e99808012f65b160343f59bfbdd1661791fcfc08ec51","RepoTags":["nginx_1.8.0_php_fpm_5.3.3:v0.1"],"Size":70797331,"VirtualSize":552001511}
+,{"Created":1435787783,"Id":"df74ad94ecc79bdda55062cfbdb0ebcb90bb6c207b4498a3dcc5f92a0b4dd971","ParentId":"2f0fa17ce0b8ac98107cc3bc66436103ee6aec323f9a27f8e67634d602918c58","RepoTags":["mysql_server_5.1.73-5:latest"],"Size":0,"VirtualSize":639244242}
+,{"Created":1435710271,"Id":"637778da53a417bb6c64b029d59382bfc8fb8381943d89377ad312bb9abbbc75","ParentId":"","RepoTags":["centos6.5-base:latest"],"Size":481204071,"VirtualSize":481204071}
+]
+HTTP/1.1 400 Bad Request
 
-<span class="p">[</span><span class="n">root</span><span class="nv">@testnode</span> <span class="n">go</span><span class="p">]</span><span class="c1"># docker images</span>
-<span class="n">REPOSITORY</span>                  <span class="n">TAG</span>                 <span class="n">IMAGE</span> <span class="n">ID</span>            <span class="n">CREATED</span>             <span class="n">VIRTUAL</span> <span class="n">SIZE</span>
-<span class="n">ubuntu</span>                      <span class="n">trusty</span><span class="o">-</span><span class="mi">20150630</span>     <span class="n">d2a0ecffe6fa</span>        <span class="mi">3</span> <span class="n">days</span> <span class="n">ago</span>          <span class="mf">188.3</span> <span class="n">MB</span>
-<span class="n">ubuntu</span>                      <span class="n">trusty</span>              <span class="n">d2a0ecffe6fa</span>        <span class="mi">3</span> <span class="n">days</span> <span class="n">ago</span>          <span class="mf">188.3</span> <span class="n">MB</span>
-<span class="n">ubuntu</span>                      <span class="mf">14.04</span>               <span class="n">d2a0ecffe6fa</span>        <span class="mi">3</span> <span class="n">days</span> <span class="n">ago</span>          <span class="mf">188.3</span> <span class="n">MB</span>
-<span class="n">ubuntu</span>                      <span class="mf">14.04.2</span>             <span class="n">d2a0ecffe6fa</span>        <span class="mi">3</span> <span class="n">days</span> <span class="n">ago</span>          <span class="mf">188.3</span> <span class="n">MB</span>
-<span class="n">ubuntu</span>                      <span class="n">latest</span>              <span class="n">d2a0ecffe6fa</span>        <span class="mi">3</span> <span class="n">days</span> <span class="n">ago</span>          <span class="mf">188.3</span> <span class="n">MB</span>
-<span class="n">nginx_1</span><span class="mf">.8.0_</span><span class="n">php_fpm_5</span><span class="mf">.3.3</span>   <span class="n">v0</span><span class="mf">.1</span>                <span class="mo">01</span><span class="mi">9</span><span class="n">c313e5671</span>        <span class="mi">3</span> <span class="n">days</span> <span class="n">ago</span>          <span class="mi">552</span> <span class="n">MB</span>
-<span class="n">mysql_server_5</span><span class="mf">.1.73</span><span class="o">-</span><span class="mi">5</span>       <span class="n">latest</span>              <span class="n">df74ad94ecc7</span>        <span class="mi">10</span> <span class="n">days</span> <span class="n">ago</span>         <span class="mf">639.2</span> <span class="n">MB</span>
-<span class="n">centos6</span><span class="mf">.5</span><span class="o">-</span><span class="n">base</span>              <span class="n">latest</span>              <span class="mi">637778</span><span class="n">da53a4</span>        <span class="mi">11</span> <span class="n">days</span> <span class="n">ago</span>         <span class="mf">481.2</span> <span class="n">MB</span>
+[root@testnode go]# docker images
+REPOSITORY                  TAG                 IMAGE ID            CREATED             VIRTUAL SIZE
+ubuntu                      trusty-20150630     d2a0ecffe6fa        3 days ago          188.3 MB
+ubuntu                      trusty              d2a0ecffe6fa        3 days ago          188.3 MB
+ubuntu                      14.04               d2a0ecffe6fa        3 days ago          188.3 MB
+ubuntu                      14.04.2             d2a0ecffe6fa        3 days ago          188.3 MB
+ubuntu                      latest              d2a0ecffe6fa        3 days ago          188.3 MB
+nginx_1.8.0_php_fpm_5.3.3   v0.1                019c313e5671        3 days ago          552 MB
+mysql_server_5.1.73-5       latest              df74ad94ecc7        10 days ago         639.2 MB
+centos6.5-base              latest              637778da53a4        11 days ago         481.2 MB
 </pre></div></body></html>
                 </div>
                 <div id="content-comments">
@@ -170,7 +170,7 @@
                     <div class="niu2-sidebar-label"><i class="icon-open-folder"></i>Category:</div>
                     <div class="niu2-sidebar-value"><a href="http://doumadou.github.io/category/docker.html">docker</a></div>
                     <div class="niu2-sidebar-label"><i class="icon-tag"></i>Tag:</div>
-                    <div class="niu2-sidebar-inter-value niu2-sidebar-tag"><a href="http://doumadou.github.io/tag/docker.html">docker</a><sup>4</sup></div>
+                    <div class="niu2-sidebar-inter-value niu2-sidebar-tag"><a href="http://doumadou.github.io/tag/docker.html">docker</a><sup>8</sup></div>
                     <div class="niu2-sidebar-inter-value niu2-sidebar-tag"><a href="http://doumadou.github.io/tag/paas.html">paas</a><sup>1</sup></div>
                 </div>
 
@@ -198,7 +198,7 @@
                 </p>
                 <p>
                     ©
-                            2015
+                            2015-2016
                     <a class="niu2-footer-link" href="http://doumadou.github.io">Gavin</a>
                 </p>
                 <p class="niu2-icons">
