@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>libvirt通过qmp协议与qemu-monitor通信 - LearnLog</title>
+        <link rel="shortcut icon" type="image/x-icon" href="/favicon.png">
+        <link rel="stylesheet" href="http://doumadou.github.io/theme/css/bootstrap.min.css" type="text/css" />
+        <link rel="stylesheet" href="http://doumadou.github.io/theme/font-icons/style.min.css" type="text/css" />
+        <link rel="stylesheet" href="http://doumadou.github.io/theme/css/niu2.min.css" type="text/css" />
+        <link rel="canonical" href="http://doumadou.github.io/libvirttong-guo-qmpxie-yi-yu-qemu-monitortong-xin.html" />
+        <script type="text/javascript">window.onload=function(){};</script>
+        <!--[if lt IE 9]>
+            <script src="http://doumadou.github.io/theme/js/html5shiv.js"></script>
+            <script src="http://doumadou.github.io/theme/js/respond.min.js"></script>
+        <![endif]-->
+    </head>
+    <body> 
+        <div id="body-header">
+            <div class="navbar navbar-inverse navbar-fixed-top">
+                <div class="col-md-12">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        <a class="navbar-brand" href="http://doumadou.github.io">
+                            <i class="icon-home"></i>LearnLog
+                        </a>
+                    </div>
+                    <nav class="collapse navbar-collapse bs-navbar-collapse" role="navigation">
+                        <ul class="nav navbar-nav">
+                        <li><a href="http://doumadou.github.io/tags.html">
+                                <i class="icon-tag"></i>Tag</a>
+                        </li>
+                        <li><a href="http://doumadou.github.io/archives.html">
+                                <i class="icon-archive"></i>Archive
+                            </a>
+                        </li>
+                        <!-- category dropdown list -->
+                        <!--  self defined dropdown list -->
+                        </ul>
+                        
+                        <!-- right nav bar -->
+                        <ul class="nav navbar-nav navbar-right">
+                        <!-- google custom search -->
+                       </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+
+        <div id="body-content">
+            <div class="col-md-8 col-md-offset-2">
+                <h1 id="content-heading">libvirt通过qmp协议与qemu-monitor通信</h1>
+            </div>
+            <div id="niu2-left-container" class="col-md-6 col-md-offset-2 with-right-border">
+                <div id="niu2-main-content">
+                    <html><body><h1 id="balloon-hmp">获取balloon信息, hmp格式</h1>
+<div class="codehilite"><pre><span></span>    #virsh qemu-monitor-command domain_name --hmp  'info balloon'
+    balloon: actual=1024
+</pre></div>
+<h1 id="guest-stats">获取guest-stats</h1>
+<div class="codehilite"><pre><span></span>    # virsh qemu-monitor-command domain_name '{"execute":"qom-get", "arguments" : { "path" : "//machine/i440fx/pci.0/child[11]" , "property" : "guest-stats" }}'
+{"return":{"stats":{"stat-swap-out":0,"stat-free-memory":802586624,"stat-minor-faults":1985905,"stat-major-faults":445,"stat-total-memory":1041391616,"stat-swap-in":0},"last-update":1460096372},"id":"libvirt-485"}
+</pre></div>
+<p>上面的命令可获取guest的实际内存，空闭内存，swap信息。前提是虚拟机中需要安装virtio-balloon模块,虚拟机配置文件中需要添加balloon设备，否则只能获取stat-total-memory. </p>
+<div class="codehilite"><pre><span></span>    <span class="nt">&lt;memballoon</span> <span class="na">model=</span><span class="s">'virtio'</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;stats</span> <span class="na">period=</span><span class="s">'10'</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;/memballoon&gt;</span>
+</pre></div>
+<p>命令中的path，是指虚拟机 balloon设备的path. 我是通过libvirt的日志调试输出，获取的path。后面我也试着通过一级一级的查询pci-ballon设备，获取path. 如果有好的其它的方法，请留言告之，谢谢。</p>
+<div class="codehilite"><pre><span></span># virsh qemu-monitor-command domain_name '{"execute":"qom-list","arguments":{"path":"/"}}'
+{"return":[{"name":"machine","type":"child&lt;pc-i440fx-2.4-machine&gt;"},{"name":"type","type":"string"},{"name":"objects","type":"child&lt;container&gt;"},{"name":"backend","type":"child&lt;container&gt;"}],"id":"libvirt-490"}
+
+# virsh qemu-monitor-command domain_name '{"execute":"qom-list","arguments":{"path":"/machine"}}'
+{"return":[{"name":"dump-guest-core","type":"bool"},{"name":"type","type":"string"},{"name":"append","type":"string"},{"name":"initrd","type":"string"},{"name":"enforce-aligned-dimm","type":"bool"},{"name":"peripheral-anon","type":"child&lt;container&gt;"},{"name":"i440fx","type":"child&lt;i440FX-pcihost&gt;"},{"name":"max-ram-below-4g","type":"size"},{"name":"kernel","type":"string"},{"name":"acpi-device","type":"link&lt;hotplug-handler&gt;"},{"name":"kernel-irqchip","type":"bool"},{"name":"iommu","type":"bool"},{"name":"unattached","type":"child&lt;container&gt;"},{"name":"dt-compatible","type":"string"},{"name":"firmware","type":"string"},{"name":"smm","type":"OnOffAuto"},{"name":"accel","type":"string"},{"name":"suppress-vmdesc","type":"bool"},{"name":"kvm-shadow-mem","type":"int"},{"name":"phandle-start","type":"int"},{"name":"smram","type":"link&lt;qemu:memory-region&gt;"},{"name":"dtb","type":"string"},{"name":"dumpdtb","type":"string"},{"name":"igd-passthru","type":"bool"},{"name":"usb","type":"bool"},{"name":"rtc_state","type":"link&lt;isa-device&gt;"},{"name":"vmport","type":"OnOffAuto"},{"name":"mem-merge","type":"bool"},{"name":"peripheral","type":"child&lt;container&gt;"},{"name":"fw_cfg","type":"child&lt;fw_cfg_io&gt;"},{"name":"hotplug-memory-region-size","type":"int"},{"name":"rtc-time","type":"struct tm"}],"id":"libvirt-491"}
+
+# virsh qemu-monitor-command domain_name '{"execute":"qom-list","arguments":{"path":"/machine/i440fx/"}}'
+{"return":[{"name":"pam-pci[4]","type":"child&lt;qemu:memory-region&gt;"},{"name":"pam-pci[15]","type":"child&lt;qemu:memory-region&gt;"},{"name":"pam-pci[0]","type":"child&lt;qemu:memory-region&gt;"},{"name":"pci.0","type":"child&lt;PCI&gt;"},{"name":"pam-pci[11]","type":"child&lt;qemu:memory-region&gt;"},{"name":"type","type":"string"},{"name":"pam-ram[6]","type":"child&lt;qemu:memory-region&gt;"},{"name":"parent_bus","type":"link&lt;bus&gt;"},{"name":"pam-rom[8]","type":"child&lt;qemu:memory-region&gt;"},{"name":"pam-ram[2]","type":"child&lt;qemu:memory-region&gt;"},{"name":"hotplugged","type":"bool"},{"name":"pam-rom[4]","type":"child&lt;qemu:memory-region&gt;"},{"name":"pam-ram[12]","type":"child&lt;qemu:memory-region&gt;"},{"name":"pam-pci[7]","type":"child&lt;qemu:memory-region&gt;"},{"name":"pam-pci[22]","type":"child&lt;qemu:memory-region&gt;"},{"name":"pam-rom[0]","type":"child&lt;qemu:memory-region&gt;"},{"name":"pam-pci[18]","type":"child&lt;qemu:memory-region&gt;"},{"name":"pam-pci[3]","type":"child&lt;qemu:memory-region&gt;"},{"name":"pci-hole-end","type":"int"},{"name":"pam-pci[14]","type":"child&lt;qemu:memory-region&gt;"},{"name":"pam-pci[10]","type":"child&lt;qemu:memory-region&gt;"},{"name":"pci-hole64-start","type":"int"},{"name":"pam-ram[9]","type":"child&lt;qemu:memory-region&gt;"},{"name":"pci-conf-data[0]","type":"child&lt;qemu:memory-region&gt;"},{"name":"pam-ram[5]","type":"child&lt;qemu:memory-region&gt;"},{"name":"pam-rom[7]","type":"child&lt;qemu:memory-region&gt;"},{"name":"pam-rom[12]","type":"child&lt;qemu:memory-region&gt;"},{"name":"hotpluggable","type":"bool"},{"name":"pci-hole64-size","type":"size"},{"name":"pam-ram[1]","type":"child&lt;qemu:memory-region&gt;"},{"name":"ioapic","type":"child&lt;kvm-ioapic&gt;"},{"name":"pam-pci[25]","type":"child&lt;qemu:memory-region&gt;"},{"name":"pam-rom[3]","type":"child&lt;qemu:memory-region&gt;"},{"name":"pam-pci[6]","type":"child&lt;qemu:memory-region&gt;"},{"name":"pam-pci[21]","type":"child&lt;qemu:memory-region&gt;"},{"name":"pam-ram[11]","type":"child&lt;qemu:memory-region&gt;"},{"name":"pam-pci[17]","type":"child&lt;qemu:memory-region&gt;"},{"name":"short_root_bus","type":"uint32"},{"name":"pam-pci[2]","type":"child&lt;qemu:memory-region&gt;"},{"name":"realized","type":"bool"},{"name":"pam-pci[13]","type":"child&lt;qemu:memory-region&gt;"},{"name":"pam-ram[8]","type":"child&lt;qemu:memory-region&gt;"},{"name":"pam-ram[4]","type":"child&lt;qemu:memory-region&gt;"},{"name":"pam-ram[0]","type":"child&lt;qemu:memory-region&gt;"},{"name":"pam-rom[6]","type":"child&lt;qemu:memory-region&gt;"},{"name":"pam-rom[11]","type":"child&lt;qemu:memory-region&gt;"},{"name":"pam-pci[9]","type":"child&lt;qemu:memory-region&gt;"},{"name":"pam-pci[24]","type":"child&lt;qemu:memory-region&gt;"},{"name":"pam-rom[2]","type":"child&lt;qemu:memory-region&gt;"},{"name":"pam-pci[5]","type":"child&lt;qemu:memory-region&gt;"},{"name":"pam-pci[20]","type":"child&lt;qemu:memory-region&gt;"},{"name":"pam-ram[10]","type":"child&lt;qemu:memory-region&gt;"},{"name":"pam-pci[16]","type":"child&lt;qemu:memory-region&gt;"},{"name":"pci-hole64-end","type":"int"},{"name":"pam-pci[1]","type":"child&lt;qemu:memory-region&gt;"},{"name":"pam-pci[12]","type":"child&lt;qemu:memory-region&gt;"},{"name":"pam-ram[7]","type":"child&lt;qemu:memory-region&gt;"},{"name":"pci-conf-idx[0]","type":"child&lt;qemu:memory-region&gt;"},{"name":"pam-rom[9]","type":"child&lt;qemu:memory-region&gt;"},{"name":"pam-ram[3]","type":"child&lt;qemu:memory-region&gt;"},{"name":"pci-hole-start","type":"int"},{"name":"pam-rom[5]","type":"child&lt;qemu:memory-region&gt;"},{"name":"pam-rom[10]","type":"child&lt;qemu:memory-region&gt;"},{"name":"pam-pci[8]","type":"child&lt;qemu:memory-region&gt;"},{"name":"pam-pci[23]","type":"child&lt;qemu:memory-region&gt;"},{"name":"pam-rom[1]","type":"child&lt;qemu:memory-region&gt;"},{"name":"pam-pci[19]","type":"child&lt;qemu:memory-region&gt;"}],"id":"libvirt-492"}
+
+# virsh qemu-monitor-command domain_name '{"execute":"qom-list","arguments":{"path":"/machine/i440fx/pci.0"}}'
+{"return":[{"name":"child[6]","type":"link&lt;virtio-blk-pci&gt;"},{"name":"child[5]","type":"link&lt;virtio-serial-pci&gt;"},{"name":"child[4]","type":"link&lt;piix3-usb-uhci&gt;"},{"name":"child[3]","type":"link&lt;PIIX4_PM&gt;"},{"name":"hotplug-handler","type":"link&lt;hotplug-handler&gt;"},{"name":"child[2]","type":"link&lt;piix3-ide&gt;"},{"name":"child[1]","type":"link&lt;PIIX3&gt;"},{"name":"child[0]","type":"link&lt;i440FX&gt;"},{"name":"child[11]","type":"link&lt;virtio-balloon-pci&gt;"},{"name":"type","type":"string"},{"name":"child[9]","type":"link&lt;cirrus-vga&gt;"},{"name":"acpi-pcihp-bsel","type":"uint32"},{"name":"child[8]","type":"link&lt;rtl8139&gt;"},{"name":"child[7]","type":"link&lt;rtl8139&gt;"},{"name":"realized","type":"bool"},{"name":"child[10]","type":"link&lt;intel-hda&gt;"}],"id":"libvirt-493"}
+</pre></div></body></html>
+                </div>
+                <div id="content-comments">
+                    <!-- 多说评论框 start -->
+                    <div class="ds-thread" data-thread-key="/libvirttong-guo-qmpxie-yi-yu-qemu-monitortong-xin.html" data-title="libvirt通过qmp协议与qemu-monitor通信" data-url="http://doumadou.github.io/libvirttong-guo-qmpxie-yi-yu-qemu-monitortong-xin.html">
+                    </div>
+                    <!-- 多说评论框 end -->
+                    <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+                    <script type="text/javascript">
+                        var duoshuoQuery = { short_name: 'doumadou' };
+                        (function() {
+                            var ds = document.createElement('script');
+                            ds.type = 'text/javascript';ds.async = true;
+                            ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+                            ds.charset = 'UTF-8';
+                            (document.getElementsByTagName('head')[0] 
+                             || document.getElementsByTagName('body')[0]).appendChild(ds);
+                        })();
+                    </script>
+                    <!-- 多说公共JS代码 end -->
+                </div>
+
+            </div>
+            <div class="niu2-right-container col-md-2">
+                <div id="niu2-sidebar-meta" class="niu2-sidebar">
+                    <div class="niu2-sidebar-label"><i class="icon-calendar"></i>Published:</div>
+                    <div class="niu2-sidebar-value">2016-04-08 14:10</div>
+                    <div class="niu2-sidebar-label"><i class="icon-open-folder"></i>Category:</div>
+                    <div class="niu2-sidebar-value"><a href="http://doumadou.github.io/category/kvm.html">kvm</a></div>
+                    <div class="niu2-sidebar-label"><i class="icon-tag"></i>Tag:</div>
+                    <div class="niu2-sidebar-inter-value niu2-sidebar-tag"><a href="http://doumadou.github.io/tag/libvirt.html">[libvirt</a><sup>1</sup></div>
+                    <div class="niu2-sidebar-inter-value niu2-sidebar-tag"><a href="http://doumadou.github.io/tag/qemu.html">qemu</a><sup>1</sup></div>
+                    <div class="niu2-sidebar-inter-value niu2-sidebar-tag"><a href="http://doumadou.github.io/tag/qemu-monitor.html">qemu-monitor</a><sup>1</sup></div>
+                    <div class="niu2-sidebar-inter-value niu2-sidebar-tag"><a href="http://doumadou.github.io/tag/qmp.html">qmp]</a><sup>1</sup></div>
+                </div>
+
+                <div id="niu2-sidebar-toc" class="niu2-sidebar" data-status="closed">
+                    <div class="niu2-sidebar-label">
+                        <i id="niu2-sidebar-toc-ctrl" class="icon-open-tocs"></i>TOC
+                    </div>
+                    <ul id="niu2-sidebar-toc-list">
+                        <li><a href="#content-heading">libvirt通过qmp协议与qemu-monitor通信</a></li>
+                        <li><a href='#balloon-hmp'>获取balloon信息, hmp格式</a></li><li><a href='#guest-stats'>获取guest-stats</a></li>
+                        <li><a href="#content-comments">Comments</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="niu2-footer">
+            <div id="body-footer" class="col-md-6 col-md-offset-2">
+                <hr/>
+                <p>
+                    Powered by <a href="https://github.com/getpelican/pelican">Pelican</a>, 
+                    <a href="https://github.com/mawenbao/niu-x2-sidebar">theme</a> built with <a href="http://getbootstrap.com">Bootstrap3</a>
+                    by <a href="http://blog.atime.me">Ma Wenbao</a>, icons by 
+                    <a href="http://fortawesome.github.io/Font-Awesome">Font Awesome</a>.
+                </p>
+                <p>
+                    ©
+                            2015-2016
+                    <a class="niu2-footer-link" href="http://doumadou.github.io">Gavin</a>
+                </p>
+                <p class="niu2-icons">
+                </p>
+            </div>
+        </div>
+
+        <div id="niu2-pygments" data-theme="github"></div>
+        <script type="text/javascript" src="http://doumadou.github.io/theme/js/jquery-1.11.0.min.js"></script>
+        <script type="text/javascript" src="http://doumadou.github.io/theme/js/niu2.min.js"></script>
+        <script type="text/javascript" src="http://doumadou.github.io/theme/js/bootstrap.min.js"></script>
+        <script type="text/javascript">
+            onContentLoaded();
+        </script>
+    </body>
+</html>
