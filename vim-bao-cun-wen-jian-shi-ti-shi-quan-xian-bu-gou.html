@@ -3,12 +3,12 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>网絡故障分析利器pathping/mtr - LearnLog</title>
+        <title>vim 保存文件时提示权限不够 - LearnLog</title>
         <link rel="shortcut icon" type="image/x-icon" href="/favicon.png">
         <link rel="stylesheet" href="http://doumadou.github.io/theme/css/bootstrap.min.css" type="text/css" />
         <link rel="stylesheet" href="http://doumadou.github.io/theme/font-icons/style.min.css" type="text/css" />
         <link rel="stylesheet" href="http://doumadou.github.io/theme/css/niu2.min.css" type="text/css" />
-        <link rel="canonical" href="http://doumadou.github.io/wang-luo-gu-zhang-fen-xi-li-qi-pathpingmtr.html" />
+        <link rel="canonical" href="http://doumadou.github.io/vim-bao-cun-wen-jian-shi-ti-shi-quan-xian-bu-gou.html" />
         <script type="text/javascript">window.onload=function(){};</script>
         <!--[if lt IE 9]>
             <script src="http://doumadou.github.io/theme/js/html5shiv.js"></script>
@@ -53,16 +53,43 @@
 
         <div id="body-content">
             <div class="col-md-8 col-md-offset-2">
-                <h1 id="content-heading">网絡故障分析利器pathping/mtr</h1>
+                <h1 id="content-heading">vim 保存文件时提示权限不够</h1>
             </div>
             <div id="niu2-left-container" class="col-md-6 col-md-offset-2 with-right-border">
                 <div id="niu2-main-content">
-                    <html><body><p>mtr(my traceroute),类似于WIN的PATHPING，可以显示路由之间的链路状态</p>
-<p>若网絡不通，可以使用mtr/pathping查看是哪个路由器出了故障。</p></body></html>
+                    <html><body><p>linux下编辑文件时，有时会遇到想保存退出时，却发现权限不够，需要sudo权限才能保存。这时通常的做法就是将内容存到一个临时文件，然后再用sudo打开，将内容替换成保存在临时文件中的内容。 这样虽然可以实现，但比较麻烦。</p>
+<p>其实，在VI/VIM命令模式下结合一些linux简单的命令，就能在不关闭当前文件的情况下达到保存文件的目的</p>
+<ol>
+<li>
+<p>输入命令:%! sudo tee % &gt; /dev/null</p>
+</li>
+<li>
+<p>按提示输入sudo权限密码</p>
+</li>
+<li>
+<p>输入"L"（Load File）</p>
+</li>
+<li>
+<p>输入:q命令退出</p>
+</li>
+</ol>
+<p>简单说明如下:</p>
+<div class="codehilite"><pre><span></span><span class="c">%　　　　　  #VI/VIM编辑的文件内容</span>
+
+<span class="sx">!　　　　　　#管道</span>
+
+<span class="n">sudo</span>　　　　 #以<span class="n">root</span>权限操作
+
+<span class="n">tee</span>         #实现将标准输入的内容写到标准输出和文件中。
+
+<span class="c">%　　　　　  #VI/VIM编辑的文件</span>
+
+<span class="o">&gt;</span> <span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">null</span>　   #将标准输出重定向到<span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">null</span>（不输出显示）
+</pre></div></body></html>
                 </div>
                 <div id="content-comments">
                     <!-- 多说评论框 start -->
-                    <div class="ds-thread" data-thread-key="/wang-luo-gu-zhang-fen-xi-li-qi-pathpingmtr.html" data-title="网絡故障分析利器pathping/mtr" data-url="http://doumadou.github.io/wang-luo-gu-zhang-fen-xi-li-qi-pathpingmtr.html">
+                    <div class="ds-thread" data-thread-key="/vim-bao-cun-wen-jian-shi-ti-shi-quan-xian-bu-gou.html" data-title="vim 保存文件时提示权限不够" data-url="http://doumadou.github.io/vim-bao-cun-wen-jian-shi-ti-shi-quan-xian-bu-gou.html">
                     </div>
                     <!-- 多说评论框 end -->
                     <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
@@ -84,12 +111,12 @@
             <div class="niu2-right-container col-md-2">
                 <div id="niu2-sidebar-meta" class="niu2-sidebar">
                     <div class="niu2-sidebar-label"><i class="icon-calendar"></i>Published:</div>
-                    <div class="niu2-sidebar-value">2015-10-13 09:49</div>
+                    <div class="niu2-sidebar-value">2016-04-29 13:10</div>
                     <div class="niu2-sidebar-label"><i class="icon-open-folder"></i>Category:</div>
-                    <div class="niu2-sidebar-value"><a href="http://doumadou.github.io/category/linux.html">linux</a></div>
+                    <div class="niu2-sidebar-value"><a href="http://doumadou.github.io/category/vim.html">vim</a></div>
                     <div class="niu2-sidebar-label"><i class="icon-tag"></i>Tag:</div>
-                    <div class="niu2-sidebar-inter-value niu2-sidebar-tag"><a href="http://doumadou.github.io/tag/linux.html">linux</a><sup>9</sup></div>
-                    <div class="niu2-sidebar-inter-value niu2-sidebar-tag"><a href="http://doumadou.github.io/tag/yun-wei.html">运維</a><sup>1</sup></div>
+                    <div class="niu2-sidebar-inter-value niu2-sidebar-tag"><a href="http://doumadou.github.io/tag/vim.html">[vim</a><sup>2</sup></div>
+                    <div class="niu2-sidebar-inter-value niu2-sidebar-tag"><a href="http://doumadou.github.io/tag/linux.html">linux]</a><sup>9</sup></div>
                 </div>
 
                 <div id="niu2-sidebar-toc" class="niu2-sidebar" data-status="closed">
@@ -97,7 +124,7 @@
                         <i id="niu2-sidebar-toc-ctrl" class="icon-open-tocs"></i>TOC
                     </div>
                     <ul id="niu2-sidebar-toc-list">
-                        <li><a href="#content-heading">网絡故障分析利器pathping/mtr</a></li>
+                        <li><a href="#content-heading">vim 保存文件时提示权限不够</a></li>
                         
                         <li><a href="#content-comments">Comments</a></li>
                     </ul>

@@ -3,12 +3,12 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>网絡故障分析利器pathping/mtr - LearnLog</title>
+        <title>ubuntu安装collectd web前端 - LearnLog</title>
         <link rel="shortcut icon" type="image/x-icon" href="/favicon.png">
         <link rel="stylesheet" href="http://doumadou.github.io/theme/css/bootstrap.min.css" type="text/css" />
         <link rel="stylesheet" href="http://doumadou.github.io/theme/font-icons/style.min.css" type="text/css" />
         <link rel="stylesheet" href="http://doumadou.github.io/theme/css/niu2.min.css" type="text/css" />
-        <link rel="canonical" href="http://doumadou.github.io/wang-luo-gu-zhang-fen-xi-li-qi-pathpingmtr.html" />
+        <link rel="canonical" href="http://doumadou.github.io/ubuntuan-zhuang-collectd-webqian-duan.html" />
         <script type="text/javascript">window.onload=function(){};</script>
         <!--[if lt IE 9]>
             <script src="http://doumadou.github.io/theme/js/html5shiv.js"></script>
@@ -53,16 +53,33 @@
 
         <div id="body-content">
             <div class="col-md-8 col-md-offset-2">
-                <h1 id="content-heading">网絡故障分析利器pathping/mtr</h1>
+                <h1 id="content-heading">ubuntu安装collectd web前端</h1>
             </div>
             <div id="niu2-left-container" class="col-md-6 col-md-offset-2 with-right-border">
                 <div id="niu2-main-content">
-                    <html><body><p>mtr(my traceroute),类似于WIN的PATHPING，可以显示路由之间的链路状态</p>
-<p>若网絡不通，可以使用mtr/pathping查看是哪个路由器出了故障。</p></body></html>
+                    <html><body><p>collectd的安装，不多说，很简单，直接按官方文档安装即可。本文说说如果安装collectd图形显示</p>
+<p>https://collectd.org/download.shtml#debian</p>
+<h1 id="">安装依赖：</h1>
+<div class="codehilite"><pre><span></span>    # apt-get install librrds-perl libconfig-general-perl libhtml-parser-perl  libregexp-common-perl
+</pre></div>
+<h1 id="apache">安装apache</h1>
+<div class="codehilite"><pre><span></span>    # apt-get install apache2 libapache2-mod-perl2
+</pre></div>
+<h1 id="web">修改web配置项</h1>
+<p>确保配置项里有</p>
+<div class="codehilite"><pre><span></span>     <span class="nt">&lt;Directory</span> <span class="err">"/var/www/collection3/bin"</span><span class="nt">&gt;</span>
+     AllowOverride All 
+     Options All    
+     Order allow,deny
+     Allow from all
+    <span class="nt">&lt;/Directory&gt;</span>
+
+     AddHandler cgi-script .cgi .pl
+</pre></div></body></html>
                 </div>
                 <div id="content-comments">
                     <!-- 多说评论框 start -->
-                    <div class="ds-thread" data-thread-key="/wang-luo-gu-zhang-fen-xi-li-qi-pathpingmtr.html" data-title="网絡故障分析利器pathping/mtr" data-url="http://doumadou.github.io/wang-luo-gu-zhang-fen-xi-li-qi-pathpingmtr.html">
+                    <div class="ds-thread" data-thread-key="/ubuntuan-zhuang-collectd-webqian-duan.html" data-title="ubuntu安装collectd web前端" data-url="http://doumadou.github.io/ubuntuan-zhuang-collectd-webqian-duan.html">
                     </div>
                     <!-- 多说评论框 end -->
                     <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
@@ -84,12 +101,11 @@
             <div class="niu2-right-container col-md-2">
                 <div id="niu2-sidebar-meta" class="niu2-sidebar">
                     <div class="niu2-sidebar-label"><i class="icon-calendar"></i>Published:</div>
-                    <div class="niu2-sidebar-value">2015-10-13 09:49</div>
+                    <div class="niu2-sidebar-value">2016-04-11 09:18</div>
                     <div class="niu2-sidebar-label"><i class="icon-open-folder"></i>Category:</div>
                     <div class="niu2-sidebar-value"><a href="http://doumadou.github.io/category/linux.html">linux</a></div>
                     <div class="niu2-sidebar-label"><i class="icon-tag"></i>Tag:</div>
-                    <div class="niu2-sidebar-inter-value niu2-sidebar-tag"><a href="http://doumadou.github.io/tag/linux.html">linux</a><sup>9</sup></div>
-                    <div class="niu2-sidebar-inter-value niu2-sidebar-tag"><a href="http://doumadou.github.io/tag/yun-wei.html">运維</a><sup>1</sup></div>
+                    <div class="niu2-sidebar-inter-value niu2-sidebar-tag"><a href="http://doumadou.github.io/tag/collectd.html">[collectd]</a><sup>1</sup></div>
                 </div>
 
                 <div id="niu2-sidebar-toc" class="niu2-sidebar" data-status="closed">
@@ -97,8 +113,8 @@
                         <i id="niu2-sidebar-toc-ctrl" class="icon-open-tocs"></i>TOC
                     </div>
                     <ul id="niu2-sidebar-toc-list">
-                        <li><a href="#content-heading">网絡故障分析利器pathping/mtr</a></li>
-                        
+                        <li><a href="#content-heading">ubuntu安装collectd web前端</a></li>
+                        <li><a href='#'>安装依赖：</a></li><li><a href='#apache'>安装apache</a></li><li><a href='#web'>修改web配置项</a></li>
                         <li><a href="#content-comments">Comments</a></li>
                     </ul>
                 </div>
